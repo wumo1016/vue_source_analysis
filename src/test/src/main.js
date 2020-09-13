@@ -9,7 +9,7 @@ new Vue({
   el: '#app',
   data(){
     return {
-      message: '测试'
+      message: '测试123'
     }
   },
   render(){
