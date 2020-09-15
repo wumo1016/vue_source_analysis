@@ -165,7 +165,6 @@ export function mountComponent (
     }
   }
   callHook(vm, 'beforeMount')
-
   let updateComponent
   /* istanbul ignore if */
   // mark 性能埋点

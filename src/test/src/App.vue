@@ -7,7 +7,7 @@
 export default {
   data(){
     return {
-
+      appmessage: '测试App'
     }
   }
 }

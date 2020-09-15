@@ -7,17 +7,15 @@ Vue.config.productionTip = false;
 
 new Vue({
   el: '#app',
+  template: '<div>123456</div>',
   data(){
-    console.log(this, 'data被调用')
     return {
       message: '测试123'
     }
   },
-  render(){
-    return (
-      <div>
-        { this.message }
-      </div>
-    )
-  }
+  // render(){
+  //   return (
+  //     <div>123</div>
+  //   )
+  // },
 })

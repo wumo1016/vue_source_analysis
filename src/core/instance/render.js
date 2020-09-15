@@ -8,15 +8,27 @@ import {
   defineReactive
 } from '../util/index'
 
-import { createElement } from '../vdom/create-element'
-import { installRenderHelpers } from './render-helpers/index'
-import { resolveSlots } from './render-helpers/resolve-slots'
-import { normalizeScopedSlots } from '../vdom/helpers/normalize-scoped-slots'
-import VNode, { createEmptyVNode } from '../vdom/vnode'
+import {
+  createElement
+} from '../vdom/create-element'
+import {
+  installRenderHelpers
+} from './render-helpers/index'
+import {
+  resolveSlots
+} from './render-helpers/resolve-slots'
+import {
+  normalizeScopedSlots
+} from '../vdom/helpers/normalize-scoped-slots'
+import VNode, {
+  createEmptyVNode
+} from '../vdom/vnode'
 
-import { isUpdatingChildComponent } from './lifecycle'
+import {
+  isUpdatingChildComponent
+} from './lifecycle'
 
-export function initRender (vm: Component) {
+export function initRender(vm: Component) {
   vm._vnode = null // the root of the child tree
   vm._staticTrees = null // v-once cached trees
   const options = vm.$options
@@ -54,11 +66,11 @@ export function initRender (vm: Component) {
 export let currentRenderingInstance: Component | null = null
 
 // for testing only
-export function setCurrentRenderingInstance (vm: Component) {
+export function setCurrentRenderingInstance(vm: Component) {
   currentRenderingInstance = vm
 }
 
-export function renderMixin (Vue: Class<Component>) {
+export function renderMixin(Vue: Class<Component> ) {
   // install runtime convenience helpers
   installRenderHelpers(Vue.prototype)
 
@@ -68,8 +80,10 @@ export function renderMixin (Vue: Class<Component>) {
 
   Vue.prototype._render = function (): VNode {
     const vm: Component = this
-    const { render, _parentVnode } = vm.$options
-
+    const {
+      render,
+      _parentVnode
+    } = vm.$options
     if (_parentVnode) {
       vm.$scopedSlots = normalizeScopedSlots(
         _parentVnode.data.scopedSlots,
@@ -88,6 +102,14 @@ export function renderMixin (Vue: Class<Component>) {
       // separately from one another. Nested component's render fns are called
       // when parent component is patched.
       currentRenderingInstance = vm
+      /**
+       * @_renderProxy 生产环境是一个vm，开发环境可能是一个Proxy
+       * 此时的render函数已经不是原本的render函数了，已经被渲染成这种函数
+        render() {
+          var h = arguments[0];
+          return h("div", [this.message]);
+        }
+       */
       vnode = render.call(vm._renderProxy, vm.$createElement)
     } catch (e) {
       handleError(e, vm, `render`)
