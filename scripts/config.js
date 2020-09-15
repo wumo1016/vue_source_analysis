@@ -76,14 +76,15 @@ const builds = {
     format: 'es',
     banner
   },
-//   // Runtime+compiler ES modules build (for bundlers)
-//   'web-full-esm': {
-//     entry: resolve('web/entry-runtime-with-compiler.js'),
-//     dest: resolve('dist/vue.esm.js'),
-//     format: 'es',
-//     alias: { he: './entity-decoder' },
-//     banner
-//   },
+  // Runtime+compiler ES modules build (for bundlers)
+  'web-full-esm': {
+    entry: resolve('web/entry-runtime-with-compiler.js'),
+    // dest: resolve('dist/vue.esm.js'),
+    dest: resolve('src/test/node_modules/vue/dist/vue.esm.js'),
+    format: 'es',
+    alias: { he: './entity-decoder' },
+    banner
+  },
 //   // Runtime+compiler ES modules build (for direct import in browser)
 //   'web-full-esm-browser-dev': {
 //     entry: resolve('web/entry-runtime-with-compiler.js'),

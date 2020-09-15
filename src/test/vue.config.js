@@ -3,6 +3,7 @@ function resolve(dir) {
   return require('path').join(__dirname, dir)
 }
 module.exports = {
+  runtimeCompiler: true,
   devServer: {
     port: 1016,
   },
