@@ -21,7 +21,7 @@ Vue.prototype.$mount = function (
   hydrating?: boolean
 ): Component {
   el = el && query(el)
-
+  // console.log('运行时编译版本 $mount')
   /* istanbul ignore if */
   if (el === document.body || el === document.documentElement) {
     process.env.NODE_ENV !== 'production' && warn(

@@ -36,13 +36,10 @@ export function initRender(vm: Component) {
   const renderContext = parentVnode && parentVnode.context
   vm.$slots = resolveSlots(options._renderChildren, renderContext)
   vm.$scopedSlots = emptyObject
-  // bind the createElement fn to this instance
-  // so that we get proper render context inside it.
-  // args order: tag, data, children, normalizationType, alwaysNormalize
-  // internal version is used by render functions compiled from templates
+  
+  // 通过tamplate编译的
   vm._c = (a, b, c, d) => createElement(vm, a, b, c, d, false)
-  // normalization is always applied for the public version, used in
-  // user-written render functions.
+  // 手写render函数使用的
   vm.$createElement = (a, b, c, d) => createElement(vm, a, b, c, d, true)
 
   // $attrs & $listeners are exposed for easier HOC creation.

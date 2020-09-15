@@ -26,13 +26,14 @@ const ALWAYS_NORMALIZE = 2
 // wrapper function for providing a more flexible interface
 // without getting yelled at by flow
 export function createElement (
-  context: Component,
+  context: Component, // 实例
   tag: any,
   data: any,
   children: any,
   normalizationType: any,
-  alwaysNormalize: boolean
+  alwaysNormalize: boolean // 是否是手写render函数
 ): VNode | Array<VNode> {
+  // isPrimitive 判断data是否是(string,number,boolean,symbol)等基本类型的值
   if (Array.isArray(data) || isPrimitive(data)) {
     normalizationType = children
     children = data
@@ -51,6 +52,7 @@ export function _createElement (
   children?: any,
   normalizationType?: number
 ): VNode | Array<VNode> {
+  // isDef判断是否是空值(undefined/null) .__ob__表示数据是否是响应式
   if (isDef(data) && isDef((data: any).__ob__)) {
     process.env.NODE_ENV !== 'production' && warn(
       `Avoid using observed data object as vnode data: ${JSON.stringify(data)}\n` +
@@ -59,15 +61,14 @@ export function _createElement (
     )
     return createEmptyVNode()
   }
-  // object syntax in v-bind
+  // 看标签是否有is属性，比如使用 <component is="Test"/> 就会有
   if (isDef(data) && isDef(data.is)) {
     tag = data.is
   }
   if (!tag) {
-    // in case of component :is set to falsy value
     return createEmptyVNode()
   }
-  // warn against non-primitive key
+  // 判断标签的key属性是否是四大类型
   if (process.env.NODE_ENV !== 'production' &&
     isDef(data) && isDef(data.key) && !isPrimitive(data.key)
   ) {
