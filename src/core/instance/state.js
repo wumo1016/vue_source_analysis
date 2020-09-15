@@ -155,7 +155,7 @@ export function getData (data: Function, vm: Component): any {
   // #7573 disable dep collection when invoking data getters
   pushTarget()
   try {
-    return data(vm, vm) // 将 data 函数中的this换成当前实例
+    // return data(1,2,3,4,5) // 将 data 函数中的this换成当前实例
   } catch (e) {
     handleError(e, vm, `data()`)
     return {}

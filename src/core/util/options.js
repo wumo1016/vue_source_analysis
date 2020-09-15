@@ -388,8 +388,9 @@ function assertObjectType (name: string, value: any, vm: ?Component) {
 export function mergeOptions (
   parent: Object,
   child: Object,
-  vm?: Component
+  vm?: Component,
 ): Object {
+
   if (process.env.NODE_ENV !== 'production') {
     checkComponents(child)
   }
@@ -427,8 +428,15 @@ export function mergeOptions (
       mergeField(key)
     }
   }
+  // new Vue的data函数的this在此更换s
   function mergeField (key) {
+    // if(key === 'data' && typeof child.data === 'function'){
+    //   child.data()
+    // }
     const strat = strats[key] || defaultStrat
+    if(key === 'data' && typeof child.data === 'function'){
+      console.log(strat)
+    }
     options[key] = strat(parent[key], child[key], vm, key)
   }
   return options

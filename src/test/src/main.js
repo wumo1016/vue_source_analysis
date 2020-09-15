@@ -8,6 +8,7 @@ Vue.config.productionTip = false;
 new Vue({
   el: '#app',
   data(){
+    console.log(this, 'data被调用')
     return {
       message: '测试123'
     }
