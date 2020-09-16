@@ -7,13 +7,21 @@ Vue.config.productionTip = false;
 
 new Vue({
   el: '#app',
-  // template: '<div>123456</div>',
-  data(){
+  template: '<div>123456</div>',
+  data() {
     return {
       message: '测试'
     }
   },
-  render(h){
-    return h('div', this.message)
+  render(h) {
+    return (
+    <div>123</div>
+    )
   },
 })
+
+// const vnode = {}
+// vnode.elm = document.createElement('div')
+// console.log(vnode.elm)
+// vnode.elm.appendChild(document.createTextNode('123'))
+// console.log(vnode.elm)

@@ -44,7 +44,7 @@ function normalizeArrayChildren (children: any, nestedIndex?: string): Array<VNo
   const res = []
   let i, c, lastIndex, last
   for (i = 0; i < children.length; i++) {
-    c = children[i]
+     c = children[i]
     if (isUndef(c) || typeof c === 'boolean') continue
     lastIndex = res.length - 1
     last = res[lastIndex]

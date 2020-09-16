@@ -8,6 +8,7 @@
  *
  * Not type-checking this because this file is perf-critical and the cost
  * of making flow understand it is not worth it.
+ * 不要对其进行类型检查，因为该文件是性能关键文件，而且让流理解它的成本不值得这样做。
  */
 
 import VNode, { cloneVNode } from './vnode'
@@ -30,7 +31,6 @@ import {
 
 export const emptyNode = new VNode('', {}, [])
 
-const hooks = ['create', 'activate', 'update', 'remove', 'destroy']
 
 function sameVnode (a, b) {
   return (
@@ -72,7 +72,9 @@ export function createPatchFunction (backend) {
   const cbs = {}
 
   const { modules, nodeOps } = backend
-
+  
+  const hooks = ['create', 'activate', 'update', 'remove', 'destroy']
+  // 将modules中的同类方法都整理到一起
   for (i = 0; i < hooks.length; ++i) {
     cbs[hooks[i]] = []
     for (j = 0; j < modules.length; ++j) {
@@ -162,11 +164,23 @@ export function createPatchFunction (backend) {
           )
         }
       }
-
+      // 创建一个真实的dom
       vnode.elm = vnode.ns
         ? nodeOps.createElementNS(vnode.ns, tag)
         : nodeOps.createElement(tag, vnode)
       setScope(vnode)
+
+      // console.log(vnode.elm)
+      
+      /* 测试函数
+      const vnode = {}
+      vnode.elm = document.createElement('div')
+      console.log(vnode.elm)
+      function createChildren(vnode){
+        vnode.elm.appendChild(document.createTextNode('123'))
+      }
+      createChildren(vnode)
+      */
 
       /* istanbul ignore if */
       if (__WEEX__) {
@@ -696,7 +710,7 @@ export function createPatchFunction (backend) {
       return node.nodeType === (vnode.isComment ? 8 : 3)
     }
   }
-
+  // isUndef 是否是 undefined/null
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
@@ -720,7 +734,8 @@ export function createPatchFunction (backend) {
           // mounting to a real element
           // check if this is server-rendered content and if we can perform
           // a successful hydration.
-          if (oldVnode.nodeType === 1 && oldVnode.hasAttribute(SSR_ATTR)) {
+          
+          if (oldVnode.nodeType === 1 && oldVnode.hasAttribute(SSR_ATTR)) {// 服务端渲染逻辑
             oldVnode.removeAttribute(SSR_ATTR)
             hydrating = true
           }
@@ -738,18 +753,17 @@ export function createPatchFunction (backend) {
               )
             }
           }
-          // either not server-rendered, or hydration failed.
-          // create an empty node and replace it
+          // 将一个真实dom转化为VNode
           oldVnode = emptyNodeAt(oldVnode)
         }
 
-        // replacing existing element
+        // replacing existing element 获取真是dom
         const oldElm = oldVnode.elm
         const parentElm = nodeOps.parentNode(oldElm)
 
-        // create new node
+        // 将VNode挂载到真实的dom上
         createElm(
-          vnode,
+          vnode, // List<VNode>
           insertedVnodeQueue,
           // extremely rare edge case: do not insert if old element is in a
           // leaving transition. Only happens when combining transition +
@@ -788,7 +802,7 @@ export function createPatchFunction (backend) {
           }
         }
 
-        // destroy old node
+        // 此时老的elm还是存在的
         if (isDef(parentElm)) {
           removeVnodes([oldVnode], 0, 0)
         } else if (isDef(oldVnode.tag)) {

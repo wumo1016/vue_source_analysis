@@ -57,6 +57,7 @@ export function initLifecycle (vm: Component) {
 
 export function lifecycleMixin (Vue: Class<Component>) {
   Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
+
     const vm: Component = this
     const prevEl = vm.$el
     const prevVnode = vm._vnode
@@ -64,6 +65,7 @@ export function lifecycleMixin (Vue: Class<Component>) {
     vm._vnode = vnode
     // Vue.prototype.__patch__ is injected in entry points
     // based on the rendering backend used.
+    // __patch__ 定义在 runtime/index.js 实际调用的是 vdom/patch.js
     if (!prevVnode) {
       // initial render
       vm.$el = vm.__patch__(vm.$el, vnode, hydrating, false /* removeOnly */)
@@ -186,7 +188,7 @@ export function mountComponent (
       measure(`vue ${name} patch`, startTag, endTag)
     }
   } else {
-    // vm._render() 生成一个vnode
+    // vm._render() 生成一个VNode
     updateComponent = () => {
       vm._update(vm._render(), hydrating)
     }
