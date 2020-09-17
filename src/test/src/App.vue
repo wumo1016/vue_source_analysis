@@ -5,6 +5,7 @@
 </template>
 <script>
 export default {
+  name: 'App',
   data(){
     return {
       appmessage: '测试App'

@@ -98,7 +98,7 @@ export function _createElement (
   }
   // 创建VNode
   let vnode, ns
-  if (typeof tag === 'string') {
+  if (typeof tag === 'string') { // HTML标签所走的方法
     let Ctor
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag)
     if (config.isReservedTag(tag)) { // 判断是否是HTML原生标签

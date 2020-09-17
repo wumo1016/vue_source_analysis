@@ -108,10 +108,11 @@ export function createComponent (
   if (isUndef(Ctor)) {
     return
   }
-
+  // vm.$options._base = Vue 在 initGlobalAPI
   const baseCtor = context.$options._base
 
-  // plain options object: turn it into a constructor
+  // plain options object: turn it into a constructor 
+  // Vue.extend 在 global-api/extend.js
   if (isObject(Ctor)) {
     Ctor = baseCtor.extend(Ctor)
   }
@@ -125,7 +126,7 @@ export function createComponent (
     return
   }
 
-  // async component
+  // 异步组件的处理
   let asyncFactory
   if (isUndef(Ctor.cid)) {
     asyncFactory = Ctor
@@ -183,14 +184,16 @@ export function createComponent (
   }
 
   // install component management hooks onto the placeholder node
+  // 将组件hook与datahook进行合并
   installComponentHooks(data)
 
   // return a placeholder vnode
   const name = Ctor.options.name || tag
+  // 第三个参数是children, 也就是说组件的 VNode children 是空
   const vnode = new VNode(
     `vue-component-${Ctor.cid}${name ? `-${name}` : ''}`,
     data, undefined, undefined, undefined, context,
-    { Ctor, propsData, listeners, tag, children },
+    { Ctor, propsData, listeners, tag, children }, // componentOptions
     asyncFactory
   )
 
