@@ -170,18 +170,6 @@ export function createPatchFunction (backend) {
         : nodeOps.createElement(tag, vnode)
       setScope(vnode)
 
-      // console.log(vnode.elm)
-      
-      /* 测试函数
-      const vnode = {}
-      vnode.elm = document.createElement('div')
-      console.log(vnode.elm)
-      function createChildren(vnode){
-        vnode.elm.appendChild(document.createTextNode('123'))
-      }
-      createChildren(vnode)
-      */
-
       /* istanbul ignore if */
       if (__WEEX__) {
         // in Weex, the default insertion order is parent-first.

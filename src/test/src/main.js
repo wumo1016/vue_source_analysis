@@ -19,9 +19,3 @@ new Vue({
     )
   },
 })
-
-// const vnode = {}
-// vnode.elm = document.createElement('div')
-// console.log(vnode.elm)
-// vnode.elm.appendChild(document.createTextNode('123'))
-// console.log(vnode.elm)
