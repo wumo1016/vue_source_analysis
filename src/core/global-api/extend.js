@@ -21,6 +21,7 @@ export function initExtend (Vue: GlobalAPI) {
     const Super = this // 由于是静态方法，所以当前this是Vue
     const SuperId = Super.cid
     const cachedCtors = extendOptions._Ctor || (extendOptions._Ctor = {})
+    
     if (cachedCtors[SuperId]) {
       return cachedCtors[SuperId]
     }
@@ -34,6 +35,7 @@ export function initExtend (Vue: GlobalAPI) {
       this._init(options)
     }
     Sub.prototype = Object.create(Super.prototype)
+    // 此时 Sub.prototype.constructor = Super ，所以需要将其构造函数指向其自身
     Sub.prototype.constructor = Sub
     Sub.cid = cid++
     Sub.options = mergeOptions(

@@ -212,7 +212,9 @@ export function createPatchFunction (backend) {
   function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
     let i = vnode.data
     if (isDef(i)) {
+      // keep-alive 逻辑
       const isReactivated = isDef(vnode.componentInstance) && i.keepAlive
+      // 会执行到 create-component.js 中的 componentVNodeHooks 中的init方法
       if (isDef(i = i.hook) && isDef(i = i.init)) {
         i(vnode, false /* hydrating */)
       }
@@ -221,8 +223,8 @@ export function createPatchFunction (backend) {
       // component also has set the placeholder vnode's elm.
       // in that case we can just return the element and be done.
       if (isDef(vnode.componentInstance)) {
-        initComponent(vnode, insertedVnodeQueue)
-        insert(parentElm, vnode.elm, refElm)
+        initComponent(vnode, insertedVnodeQueue) // 先将子组件插入到父组件中
+        insert(parentElm, vnode.elm, refElm) // 最终才渲染父组件
         if (isTrue(isReactivated)) {
           reactivateComponent(vnode, insertedVnodeQueue, parentElm, refElm)
         }

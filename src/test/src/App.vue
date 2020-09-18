@@ -1,6 +1,6 @@
 <template>
   <div>
-    测试
+    App
   </div>
 </template>
 <script>
@@ -8,11 +8,11 @@ export default {
   name: 'App',
   data(){
     return {
-      appmessage: '测试App'
+      message: '测试App'
     }
   }
 }
 </script>
-
+ 
 <style lang="scss">
 </style>
