@@ -191,7 +191,8 @@ export function mountComponent (
     // vm._render 定义在 instance/render.js 中
     // vm._render() 生成一个VNode
     updateComponent = () => {
-      vm._update(vm._render(), hydrating)
+      const render = vm._render()
+      vm._update(render, hydrating)
     }
   }
 

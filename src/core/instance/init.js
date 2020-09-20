@@ -76,7 +76,7 @@ export function initInternalComponent (vm: Component, options: InternalComponent
   // doing this because it's faster than dynamic enumeration.
   const parentVnode = options._parentVnode
   opts.parent = options.parent // vm实例
-  opts._parentVnode = parentVnode // 当前VNode
+  opts._parentVnode = parentVnode // 当前组件原始vnode
 
   const vnodeComponentOptions = parentVnode.componentOptions
   opts.propsData = vnodeComponentOptions.propsData

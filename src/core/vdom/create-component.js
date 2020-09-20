@@ -45,11 +45,13 @@ const componentVNodeHooks = {
       const mountedNode: any = vnode // work around flow
       componentVNodeHooks.prepatch(mountedNode, mountedNode)
     } else {
+      // activeInstance(当前实例 vm) 是在 lifecycle.js中 _update的时候赋值的
+      // 返回的是子组件vm实例
       const child = vnode.componentInstance = createComponentInstanceForVnode(
         vnode,
         activeInstance
       )
-      child.$mount(hydrating ? vnode.elm : undefined, hydrating)
+      child.$mount(hydrating ? vnode.elm : undefined, hydrating) // 递归挂载
     }
   },
 
@@ -195,7 +197,6 @@ export function createComponent (
     { Ctor, propsData, listeners, tag, children }, // componentOptions
     asyncFactory
   )
-
   // Weex specific: invoke recycle-list optimized @render function for
   // extracting cell-slot template.
   // https://github.com/Hanks10100/weex-native-directive/tree/master/component
@@ -214,7 +215,7 @@ export function createComponentInstanceForVnode (
 
   const options: InternalComponentOptions = {
     _isComponent: true,
-    _parentVnode: vnode, // 占位符 vnode
+    _parentVnode: vnode, // 占位符 vnode 当前组件原始vnode
     parent // 当前vm实例
   }
   // check inline-template render functions

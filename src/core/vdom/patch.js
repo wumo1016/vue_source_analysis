@@ -211,6 +211,18 @@ export function createPatchFunction (backend) {
 
   function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
     let i = vnode.data
+    /* 
+    如果是组件，再创建组件VNode(createComponent)的时候加入的
+    vnode.data = {
+      hook: {
+        init: function,
+        prepatch: function,
+        insert: function,
+        destroy: function
+      },
+      on: unknow
+    }
+    */
     if (isDef(i)) {
       // keep-alive 逻辑
       const isReactivated = isDef(vnode.componentInstance) && i.keepAlive
@@ -222,8 +234,10 @@ export function createPatchFunction (backend) {
       // it should've created a child instance and mounted it. the child
       // component also has set the placeholder vnode's elm.
       // in that case we can just return the element and be done.
+      // 如果是组件 vnode.componentInstance 就是当前子组件实例
       if (isDef(vnode.componentInstance)) {
-        initComponent(vnode, insertedVnodeQueue) // 先将子组件插入到父组件中
+        // 实例 $el 是在 lifecycle.js 中赋值的
+        initComponent(vnode, insertedVnodeQueue) // 将实例$el赋值给vnode的elm
         insert(parentElm, vnode.elm, refElm) // 最终才渲染父组件
         if (isTrue(isReactivated)) {
           reactivateComponent(vnode, insertedVnodeQueue, parentElm, refElm)
@@ -702,6 +716,7 @@ export function createPatchFunction (backend) {
   }
   // isUndef 是否是 undefined/null
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
+
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
       return
@@ -709,12 +724,12 @@ export function createPatchFunction (backend) {
 
     let isInitialPatch = false
     const insertedVnodeQueue = []
-
+    // 初始化的时候是判断是否有 vm.$el
     if (isUndef(oldVnode)) {
       // empty mount (likely as component), create new root element
       isInitialPatch = true
       createElm(vnode, insertedVnodeQueue)
-    } else {
+    } else { // 有el走的是这个
       const isRealElement = isDef(oldVnode.nodeType)
       if (!isRealElement && sameVnode(oldVnode, vnode)) {
         // patch existing root node
@@ -747,7 +762,7 @@ export function createPatchFunction (backend) {
           oldVnode = emptyNodeAt(oldVnode)
         }
 
-        // replacing existing element 获取真是dom
+        // replacing existing element 获取真实dom
         const oldElm = oldVnode.elm
         const parentElm = nodeOps.parentNode(oldElm)
 
