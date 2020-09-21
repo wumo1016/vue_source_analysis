@@ -151,18 +151,28 @@ strats.data = function (
   return mergeDataOrFn(parentVal, childVal, vm)
 }
 
-/**
- * Hooks and props are merged as arrays.
- */
+
+
+
+
+
+// 生命周期的合并
+
+LIFECYCLE_HOOKS.forEach(hook => {
+  strats[hook] = mergeHook
+})
+
 function mergeHook(
   parentVal: ? Array<Function> ,
   childVal: ? Function | ? Array<Function>
 ): ? Array<Function> {
   const res = childVal ?
-    parentVal ?
-    parentVal.concat(childVal) :
-    Array.isArray(childVal) ?
-    childVal : [childVal] : parentVal
+    (
+      parentVal ? parentVal.concat(childVal) :
+    (
+      Array.isArray(childVal) ? childVal : [childVal]
+    )
+    ) : parentVal
   return res ?
     dedupeHooks(res) : res
 }
@@ -176,10 +186,6 @@ function dedupeHooks(hooks) {
   }
   return res
 }
-
-LIFECYCLE_HOOKS.forEach(hook => {
-  strats[hook] = mergeHook
-})
 
 /**
  * Assets
@@ -436,7 +442,6 @@ export function mergeOptions(
       }
     }
   }
-
   const options = {}
   let key
   for (key in parent) {

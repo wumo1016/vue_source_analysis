@@ -11,6 +11,9 @@ export default {
       message: '测试App'
     }
   },
+  created(){
+    console.log('app created')
+  }
 }
 </script>
  
