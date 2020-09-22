@@ -10,10 +10,3 @@ new Vue({
 })
 
 
-// function Test(){
-
-// }
-// Test.mixin = function(){
-//   console.log(this)
-// }
-// Test.mixin()

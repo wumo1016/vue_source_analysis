@@ -815,7 +815,6 @@ export function createPatchFunction (backend) {
         }
       }
     }
-
     invokeInsertHook(vnode, insertedVnodeQueue, isInitialPatch)
     return vnode.elm
   }

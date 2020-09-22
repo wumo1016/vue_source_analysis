@@ -72,6 +72,7 @@ export function initMixin (Vue: Class<Component>) {
 }
 
 export function initInternalComponent (vm: Component, options: InternalComponentOptions) {
+  // opts = new Object().__proto__ = vm.constructor.options
   const opts = vm.$options = Object.create(vm.constructor.options) // 子组件的构造器 继承自Vue
   // doing this because it's faster than dynamic enumeration.
   const parentVnode = options._parentVnode

@@ -346,7 +346,7 @@ export function callHook (vm: Component, hook: string) {
   const info = `${hook} hook`
   if (handlers) {
     for (let i = 0, j = handlers.length; i < j; i++) {
-      invokeWithErrorHandling(handlers[i], vm, null, vm, info)
+      invokeWithErrorHandling(handlers[i], vm, null, vm, info) // 实际上就是调用函数，并进行一些错误处理
     }
   }
   if (vm._hasHookEvent) {
