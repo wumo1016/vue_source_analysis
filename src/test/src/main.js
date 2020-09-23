@@ -3,10 +3,14 @@ import App from "./App.vue";
 
 Vue.config.productionTip = false;
 
+Vue.component('App', App)
 
 new Vue({
+  template: '<App></App>',
   el: '#app',
-  render: h => h(App),
+  // render(){
+  //   return (
+  //     <App />
+  //   )
+  // },
 })
-
-

@@ -10,7 +10,7 @@ export function initAssetRegisters (Vue: GlobalAPI) {
   ASSET_TYPES.forEach(type => {
     Vue[type] = function (
       id: string,
-      definition: Function | Object
+      definition: Function | Object 
     ): Function | Object | void {
       if (!definition) {
         return this.options[type + 's'][id]
@@ -19,6 +19,7 @@ export function initAssetRegisters (Vue: GlobalAPI) {
         if (process.env.NODE_ENV !== 'production' && type === 'component') {
           validateComponentName(id)
         }
+        // 注册全局组件
         if (type === 'component' && isPlainObject(definition)) {
           definition.name = definition.name || id
           definition = this.options._base.extend(definition)

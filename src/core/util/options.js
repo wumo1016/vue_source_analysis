@@ -415,7 +415,6 @@ export function mergeOptions(
   child: Object,
   vm ?: Component,
 ): Object {
-
   if (process.env.NODE_ENV !== 'production') {
     checkComponents(child)
   }
@@ -478,9 +477,9 @@ export function resolveAsset(
   const assets = options[type]
   // check local registration variations first
   if (hasOwn(assets, id)) return assets[id]
-  const camelizedId = camelize(id)
+  const camelizedId = camelize(id) // 驼峰
   if (hasOwn(assets, camelizedId)) return assets[camelizedId]
-  const PascalCaseId = capitalize(camelizedId)
+  const PascalCaseId = capitalize(camelizedId) // 首字母大写
   if (hasOwn(assets, PascalCaseId)) return assets[PascalCaseId]
   // fallback to prototype chain
   const res = assets[id] || assets[camelizedId] || assets[PascalCaseId]
