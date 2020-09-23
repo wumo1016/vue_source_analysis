@@ -61,7 +61,7 @@ export function resolveAsyncComponent (
   if (isTrue(factory.loading) && isDef(factory.loadingComp)) {
     return factory.loadingComp
   }
-
+  // 工厂函数第一次走的逻辑
   if (owner && !isDef(factory.owners)) {
     const owners = factory.owners = [owner]
     let sync = true
@@ -87,7 +87,7 @@ export function resolveAsyncComponent (
         }
       }
     }
-
+    // 保证resolve函数只执行一次
     const resolve = once((res: Object | Class<Component>) => {
       // cache resolved
       factory.resolved = ensureCtor(res, baseCtor)
