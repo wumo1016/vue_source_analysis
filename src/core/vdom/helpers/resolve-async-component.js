@@ -163,3 +163,19 @@ export function resolveAsyncComponent (
       : factory.resolved
   }
 }
+
+/*
+// 测试用高阶组件
+const AsyncComp = () => ({
+  // 需要加载的组件，应该是Promise
+  component: import('./components/headers.vue'),
+  // 加载中应当渲染的组件
+  loading: LoadingComp,
+  // 出错时渲染的组件
+  error: ErrorComp,
+  // 渲染加载中组件前的等待时间，默认200ms
+  delay: 200,
+  // 最长等待时间，超出等到时间渲染错误组件 默认： Infinity
+  timeout: 10000
+}) 
+*/
