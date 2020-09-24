@@ -1,24 +1,19 @@
 <template>
   <div>
-    <Headers />
+    {{ message.name }}
+    <div @click="test">测试</div>
+    <!-- <Headers /> -->
   </div>
 </template>
 
 <script>
-import Headers from "@/components/headers.vue";
+// import Headers from "@/components/headers.vue";
 export default {
   name: "A",
-  components: {
-    Headers
-  },
-  // props: {
-  //   name: String
-  // },
-  // created(){
-  //   console.log(this.name)
-  // }
-  beforeMount() {},
-  mounted() {}
+  methods: {
+    test(){
+    }
+  }
 };
 </script>
 

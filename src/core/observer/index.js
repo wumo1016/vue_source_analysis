@@ -43,7 +43,8 @@ export class Observer {
     this.value = value
     this.dep = new Dep()
     this.vmCount = 0
-    def(value, '__ob__', this)
+    // 对于initData就是往data对象上扩展一个__ob__属性，值是当前Observer实例
+    def(value, '__ob__', this) // 直接设置enumerable会被设置成true
     if (Array.isArray(value)) {
       if (hasProto) {
         protoAugment(value, arrayMethods)
@@ -107,10 +108,14 @@ function copyAugment (target: Object, src: Object, keys: Array<string>) {
  * returns the new observer if successfully observed,
  * or the existing observer if the value already has one.
  */
+
+// initData时传入的就是(data,true)
 export function observe (value: any, asRootData: ?boolean): Observer | void {
+  // 必须 typeof value === 'object' 且不能是VNode实例
   if (!isObject(value) || value instanceof VNode) {
     return
   }
+  // shouldObserve 在initProps的时候有更改过
   let ob: Observer | void
   if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
     ob = value.__ob__
@@ -149,7 +154,7 @@ export function defineReactive (
   // cater for pre-defined getter/setters
   const getter = property && property.get
   const setter = property && property.set
-  if ((!getter || setter) && arguments.length === 2) {
+  if ((!getter || setter) && arguments.length === 2) { // 如果没传value
     val = obj[key]
   }
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     123465
-    <headers />
+    {{ info.name }}
   </div>
 </template>
 <script>
@@ -11,9 +11,15 @@ export default {
   // components: { A },
   data(){
     return {
-      message: '测试App'
+      info: {
+        name: '小明'
+      }
     }
   },
+  methods: {
+    test(){
+    }
+  }
 }
 </script>
  

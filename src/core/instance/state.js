@@ -144,7 +144,7 @@ function initData (vm: Component) {
         vm
       )
     } else if (!isReserved(key)) {
-      proxy(vm, `_data`, key) // 将data中的属性代理到this上
+      proxy(vm, `_data`, key) // 将data中的属性代理到vm实例上
     }
   }
   // observe data
