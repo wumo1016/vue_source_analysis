@@ -1,34 +1,28 @@
 <template>
   <div>
-    <!-- 123465 -->
-    <div v-if="flag">{{ msg }}</div>
-    <div v-else>{{ msg1 }}</div>
-
+    {{ msg1 }}
+    {{ msg2 }}
     <button @click="change">change</button>
-    <button @click="toggle">toggle</button>
   </div>
 </template>
 <script>
 // import A from './views/A/index'
 export default {
-  name: 'App',
+  name: "App",
   // components: { A },
-  data(){
+  data() {
     return {
-      flag: true,
-      msg: '测试1',
-      msg1: '测试2'
-    }
+      msg1: "测试1",
+      msg2: "测试2",
+    };
   },
   methods: {
-    change(){
-      this.msg = Math.random()
-    },
-    toggle(){
-      this.flag = !this.flag
+    change() {
+      this.msg1 = 1
+      this.msg2 = 2
     },
   }
-}
+};
 </script>
  
 <style lang="scss">
