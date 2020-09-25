@@ -1,7 +1,11 @@
 <template>
   <div>
-    123465
-    {{ info.name }}
+    <!-- 123465 -->
+    <div v-if="flag">{{ msg }}</div>
+    <div v-else>{{ msg1 }}</div>
+
+    <button @click="change">change</button>
+    <button @click="toggle">toggle</button>
   </div>
 </template>
 <script>
@@ -11,14 +15,18 @@ export default {
   // components: { A },
   data(){
     return {
-      info: {
-        name: '小明'
-      }
+      flag: true,
+      msg: '测试1',
+      msg1: '测试2'
     }
   },
   methods: {
-    test(){
-    }
+    change(){
+      this.msg = Math.random()
+    },
+    toggle(){
+      this.flag = !this.flag
+    },
   }
 }
 </script>

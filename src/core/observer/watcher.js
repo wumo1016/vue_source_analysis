@@ -44,7 +44,7 @@ export default class Watcher {
 
   constructor (
     vm: Component,
-    expOrFn: string | Function,
+    expOrFn: string | Function, // mountComponent中传入的就是updateComponent
     cb: Function,
     options?: ?Object,
     isRenderWatcher?: boolean
@@ -99,6 +99,7 @@ export default class Watcher {
    * Evaluate the getter, and re-collect dependencies.
    */
   get () {
+    // debugger
     pushTarget(this)
     let value
     const vm = this.vm
@@ -116,7 +117,9 @@ export default class Watcher {
       if (this.deep) {
         traverse(value)
       }
+      // debugger
       popTarget()
+      // console.log(Dep.target)
       this.cleanupDeps()
     }
     return value
@@ -139,7 +142,7 @@ export default class Watcher {
   /**
    * Clean up for dependency collection.
    */
-  cleanupDeps () {
+  cleanupDeps () { // 将页面中无用属性的Watcher从subs中移除
     let i = this.deps.length
     while (i--) {
       const dep = this.deps[i]

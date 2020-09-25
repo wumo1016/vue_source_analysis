@@ -24,13 +24,13 @@ export default class Dep {
     this.subs.push(sub)
   }
 
-  removeSub (sub: Watcher) {
+  removeSub (sub: Watcher) { // 移除数组中的指定元素
     remove(this.subs, sub)
   }
 
   depend () {
     if (Dep.target) {
-      Dep.target.addDep(this)
+      Dep.target.addDep(this) // Watcher的方法
     }
   }
 
