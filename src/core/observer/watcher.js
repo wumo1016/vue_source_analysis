@@ -142,7 +142,8 @@ export default class Watcher {
   /**
    * Clean up for dependency collection.
    */
-  cleanupDeps () { // 将页面中无用属性的Watcher从subs中移除
+  // 将页面中无用属性的Watcher从subs中移除
+  cleanupDeps () {
     let i = this.deps.length
     while (i--) {
       const dep = this.deps[i]
