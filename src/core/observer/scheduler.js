@@ -81,7 +81,7 @@ function flushSchedulerQueue () {
   //    user watchers are created before the render watcher)
   // 3. If a component is destroyed during a parent component's watcher run,
   //    its watchers can be skipped.
-  // 1.保存父组件先更新
+  // 1.保证父组件先更新
   // 2.user Watcher要在render Watcher之前
   queue.sort((a, b) => a.id - b.id)
 
@@ -90,7 +90,7 @@ function flushSchedulerQueue () {
   for (index = 0; index < queue.length; index++) {
     watcher = queue[index]
     if (watcher.before) {
-      watcher.before()
+      watcher.before() // 钩子函数 boforeUpdate
     }
     id = watcher.id
     has[id] = null
@@ -98,7 +98,7 @@ function flushSchedulerQueue () {
     // in dev build, check and stop circular updates.
     if (process.env.NODE_ENV !== 'production' && has[id] != null) {
       circular[id] = (circular[id] || 0) + 1
-      if (circular[id] > MAX_UPDATE_COUNT) {
+      if (circular[id] > MAX_UPDATE_COUNT) { // 最多100次 无限循环 当更改msg时，写一个watcher监听msg，this.msg = Math.random()
         warn(
           'You may have an infinite update loop ' + (
             watcher.user
@@ -120,7 +120,7 @@ function flushSchedulerQueue () {
 
   // call component updated and activated hooks
   callActivatedHooks(activatedQueue)
-  callUpdatedHooks(updatedQueue)
+  callUpdatedHooks(updatedQueue) // 钩子函数 updated
 
   // devtool hook
   /* istanbul ignore if */
@@ -181,7 +181,6 @@ export function queueWatcher (watcher: Watcher) {
     // queue the flush
     if (!waiting) {
       waiting = true
-
       if (process.env.NODE_ENV !== 'production' && !config.async) {
         flushSchedulerQueue()
         return

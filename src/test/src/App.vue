@@ -1,7 +1,6 @@
 <template>
   <div>
-    {{ msg1 }}
-    {{ msg2 }}
+    <div id="test">{{ msg }}</div>
     <button @click="change">change</button>
   </div>
 </template>
@@ -12,18 +11,23 @@ export default {
   // components: { A },
   data() {
     return {
-      msg1: "测试1",
-      msg2: "测试2",
+      msg: "测试"
     };
   },
   methods: {
     change() {
-      this.msg1 = 1
-      this.msg2 = 2
-    },
+      const test = document.querySelector("#test");
+      this.$nextTick(() => {
+        console.log(test.innerText);
+      });
+      this.$nextTick().then(() => {
+        console.log(test.innerText);
+      })
+      this.msg = 123
+    }
   }
 };
 </script>
- 
+
 <style lang="scss">
 </style>
