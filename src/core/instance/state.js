@@ -212,7 +212,8 @@ export function defineComputed (
   key: string,
   userDef: Object | Function
 ) {
-  const shouldCache = !isServerRendering()
+  const shouldCache = !isServerRendering() // 浏览器下就是true
+  // userDef就是computed中的键值
   if (typeof userDef === 'function') {
     sharedPropertyDefinition.get = shouldCache
       ? createComputedGetter(key)
@@ -242,10 +243,13 @@ function createComputedGetter (key) {
   return function computedGetter () {
     const watcher = this._computedWatchers && this._computedWatchers[key]
     if (watcher) {
+      // 初始化的时候 cher.dirty = true
+      // 在修改data中属性时候，会走到自己subs的computed watcher，然后在update的时候 watcher.dirty = true
       if (watcher.dirty) {
-        watcher.evaluate()
+        watcher.evaluate() // cher.dirty = false
       }
       if (Dep.target) {
+        // 将自己的computed watcher添加到每个用到的属性的subs中
         watcher.depend()
       }
       return watcher.value

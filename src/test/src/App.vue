@@ -1,12 +1,6 @@
 <template>
   <div>
-    <div>{{ msg }}</div>
-    <ul>
-      <li v-for="item in list">
-        {{ item }}
-      </li>
-    </ul>
-    <button @click="add">add</button>
+    {{ family }}
     <button @click="change">change</button>
   </div>
 </template>
@@ -17,21 +11,19 @@ export default {
   // components: { A },
   data() {
     return {
-      msg: {
-        a: 123
-      },
+      msg: 456,
       list: [1, 2, 3],
       
     };
   },
+  computed: {
+    family(){
+      return this.msg + '123'
+    }
+  },
   methods: {
-    add(){
-      // this.msg.b = 456
-      Vue.set(this.msg, 'b', 789)
-      // this.list[3] = 5
-    },
     change() {
-      this.list[2] = 9
+      this.msg = 789
     },
   }
 };
