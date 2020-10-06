@@ -1,4 +1,12 @@
 /*
+ * @Description: 
+ * @Author: liutq
+ * @Date: 2020-10-06 09:23:29
+ * @LastEditTime: 2020-10-06 11:41:31
+ * @LastEditors: liutq
+ * @Reference: 
+ */
+/*
  * not type checking this file because flow doesn't play well with
  * dynamically accessing methods on Array prototype
  */
@@ -24,6 +32,7 @@ const methodsToPatch = [
 methodsToPatch.forEach(function (method) {
   // cache original method
   const original = arrayProto[method]
+  // 为对象添加属性
   def(arrayMethods, method, function mutator (...args) {
     const result = original.apply(this, args)
     const ob = this.__ob__

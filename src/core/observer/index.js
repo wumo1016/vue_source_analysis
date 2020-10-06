@@ -43,10 +43,12 @@ export class Observer {
     this.value = value
     this.dep = new Dep()
     this.vmCount = 0
-    // 对于initData就是往data对象上扩展一个__ob__属性，值是当前Observer实例
+    // 对于initData就是往对象上扩展一个__ob__属性，值是当前Observer实例
     def(value, '__ob__', this) // 直接设置enumerable会被设置成true
     if (Array.isArray(value)) {
+      // 是否支持__proto__属性
       if (hasProto) {
+        // 将value的原型指向arrayMethods
         protoAugment(value, arrayMethods)
       } else {
         copyAugment(value, arrayMethods, arrayKeys)
@@ -157,7 +159,7 @@ export function defineReactive (
   if ((!getter || setter) && arguments.length === 2) { // 如果没传value
     val = obj[key]
   }
-
+  // observe 返回就是当前val对象
   let childOb = !shallow && observe(val)
   Object.defineProperty(obj, key, {
     enumerable: true,
@@ -166,6 +168,7 @@ export function defineReactive (
       const value = getter ? getter.call(obj) : val
       if (Dep.target) {
         dep.depend()
+        // 将当前watcher添加到嵌套对象的dep上，等将来为对象添加新属性时，可以直接执行这个对象的dep中的watcher
         if (childOb) {
           childOb.dep.depend()
           if (Array.isArray(value)) {
@@ -204,9 +207,10 @@ export function defineReactive (
  * already exist.
  */
 export function set (target: Array<any> | Object, key: any, val: any): any {
+  // debugger
   if (process.env.NODE_ENV !== 'production' &&
     (isUndef(target) || isPrimitive(target))
-  ) {
+  ) {  
     warn(`Cannot set reactive property on undefined, null, or primitive value: ${(target: any)}`)
   }
   if (Array.isArray(target) && isValidArrayIndex(key)) {
@@ -218,6 +222,7 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
     target[key] = val
     return val
   }
+  // 是否是响应式对象, 返回的是data中定义的响应式对象，value是一个Observe
   const ob = (target: any).__ob__
   if (target._isVue || (ob && ob.vmCount)) {
     process.env.NODE_ENV !== 'production' && warn(
@@ -234,7 +239,7 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
   ob.dep.notify()
   return val
 }
-
+ 
 /**
  * Delete a property and trigger change if necessary.
  */

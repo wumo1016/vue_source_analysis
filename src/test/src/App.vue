@@ -1,6 +1,12 @@
 <template>
   <div>
-    <div id="test">{{ msg }}</div>
+    <div>{{ msg }}</div>
+    <ul>
+      <li v-for="item in list">
+        {{ item }}
+      </li>
+    </ul>
+    <button @click="add">add</button>
     <button @click="change">change</button>
   </div>
 </template>
@@ -11,23 +17,28 @@ export default {
   // components: { A },
   data() {
     return {
-      msg: "测试"
+      msg: {
+        a: 123
+      },
+      list: [1, 2, 3],
+      
     };
   },
   methods: {
+    add(){
+      // this.msg.b = 456
+      Vue.set(this.msg, 'b', 789)
+      // this.list[3] = 5
+    },
     change() {
-      const test = document.querySelector("#test");
-      this.$nextTick(() => {
-        console.log(test.innerText);
-      });
-      this.$nextTick().then(() => {
-        console.log(test.innerText);
-      })
-      this.msg = 123
-    }
+      this.list[2] = 9
+    },
   }
 };
 </script>
 
 <style lang="scss">
 </style>
+
+
+

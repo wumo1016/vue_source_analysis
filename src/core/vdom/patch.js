@@ -598,6 +598,7 @@ export function createPatchFunction (backend) {
       vnode.parent.data.pendingInsert = queue
     } else {
       for (let i = 0; i < queue.length; ++i) {
+        // insert在create-component.js中定义
         queue[i].data.hook.insert(queue[i])
       }
     }
