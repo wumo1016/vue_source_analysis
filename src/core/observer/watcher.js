@@ -79,6 +79,7 @@ export default class Watcher {
     if (typeof expOrFn === 'function') {
       this.getter = expOrFn
     } else {
+      // user watcher的时候expOrFn通常是一个字符串
       this.getter = parsePath(expOrFn)
       if (!this.getter) {
         this.getter = noop
@@ -104,6 +105,7 @@ export default class Watcher {
     let value
     const vm = this.vm
     try {
+      // 对于user watcher 执行的就是 parsePath，读取一遍监听的属性，将当前user watcher加入到这个属性中的subs中
       value = this.getter.call(vm, vm)
     } catch (e) {
       if (this.user) {

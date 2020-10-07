@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ family }}
     <button @click="change">change</button>
   </div>
 </template>
@@ -11,19 +10,27 @@ export default {
   // components: { A },
   data() {
     return {
-      msg: 456,
-      list: [1, 2, 3],
+      msg: 1,
+      person: {
+        name: {
+          first: 1
+        }
+      }
       
     };
   },
-  computed: {
-    family(){
-      return this.msg + '123'
-    }
+  watch: {
+    person: {
+      deep: true,
+      handler(){
+
+      }
+    },
+
   },
   methods: {
     change() {
-      this.msg = 789
+      this.person.name.first = 789
     },
   }
 };

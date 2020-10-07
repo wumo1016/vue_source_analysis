@@ -307,7 +307,7 @@ function initWatch (vm: Component, watch: Object) {
 function createWatcher (
   vm: Component,
   expOrFn: string | Function,
-  handler: any,
+  handler: any, // watch的值
   options?: Object
 ) {
   if (isPlainObject(handler)) {

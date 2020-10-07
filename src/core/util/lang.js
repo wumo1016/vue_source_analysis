@@ -35,11 +35,12 @@ export function parsePath (path: string): any {
   if (bailRE.test(path)) {
     return
   }
+  // user watcher的时候 监听user.name 
   const segments = path.split('.')
   return function (obj) {
     for (let i = 0; i < segments.length; i++) {
       if (!obj) return
-      obj = obj[segments[i]]
+      obj = obj[segments[i]] // 读取一遍
     }
     return obj
   }

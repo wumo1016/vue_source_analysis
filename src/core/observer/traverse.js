@@ -35,6 +35,7 @@ function _traverse (val: any, seen: SimpleSet) {
   } else {
     keys = Object.keys(val)
     i = keys.length
+    // 读取属性，触发getter
     while (i--) _traverse(val[keys[i]], seen)
   }
 }
