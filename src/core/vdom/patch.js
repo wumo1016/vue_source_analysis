@@ -313,6 +313,7 @@ export function createPatchFunction (backend) {
   }
 
   function isPatchable (vnode) {
+    // 是否是组件vnode
     while (vnode.componentInstance) {
       vnode = vnode.componentInstance._vnode
     }
@@ -559,6 +560,7 @@ export function createPatchFunction (backend) {
 
     let i
     const data = vnode.data
+    // 是否是组件vnode, prepatch定义在 vnode/create-component.js
     if (isDef(data) && isDef(i = data.hook) && isDef(i = i.prepatch)) {
       i(oldVnode, vnode)
     }
@@ -570,6 +572,7 @@ export function createPatchFunction (backend) {
       if (isDef(i = data.hook) && isDef(i = i.update)) i(oldVnode, vnode)
     }
     if (isUndef(vnode.text)) {
+      // 如果vnode都定义了children
       if (isDef(oldCh) && isDef(ch)) {
         if (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly)
       } else if (isDef(ch)) {
@@ -717,7 +720,6 @@ export function createPatchFunction (backend) {
   }
   // isUndef 是否是 undefined/null
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
-
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
       return
@@ -730,8 +732,9 @@ export function createPatchFunction (backend) {
       // empty mount (likely as component), create new root element
       isInitialPatch = true
       createElm(vnode, insertedVnodeQueue)
-    } else { // 有el走的是这个
+    } else { // 有el / 组件更新
       const isRealElement = isDef(oldVnode.nodeType)
+      // sameVnode 组件的新旧节点是否相同
       if (!isRealElement && sameVnode(oldVnode, vnode)) {
         // patch existing root node
         patchVnode(oldVnode, vnode, insertedVnodeQueue, null, null, removeOnly)
@@ -781,12 +784,12 @@ export function createPatchFunction (backend) {
         // update parent placeholder node element, recursively
         if (isDef(vnode.parent)) {
           let ancestor = vnode.parent
-          const patchable = isPatchable(vnode)
+          const patchable = isPatchable(vnode) // 是否可挂载
           while (ancestor) {
             for (let i = 0; i < cbs.destroy.length; ++i) {
               cbs.destroy[i](ancestor)
             }
-            ancestor.elm = vnode.elm
+            ancestor.elm = vnode.elm // 更新渲染节点
             if (patchable) {
               for (let i = 0; i < cbs.create.length; ++i) {
                 cbs.create[i](emptyNode, ancestor)
@@ -804,11 +807,11 @@ export function createPatchFunction (backend) {
             } else {
               registerRef(ancestor)
             }
-            ancestor = ancestor.parent
+            ancestor = ancestor.parent // 循环，直到不是组件节点
           }
         }
 
-        // 此时老的elm还是存在的
+        // 删除旧的节点
         if (isDef(parentElm)) {
           removeVnodes([oldVnode], 0, 0)
         } else if (isDef(oldVnode.tag)) {
