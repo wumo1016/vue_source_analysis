@@ -25,13 +25,17 @@ export function validateProp (
   vm?: Component
 ): any {
   const prop = propOptions[key]
+  // 看当前组件的props属性是否是父组件传入的还是默认的
   const absent = !hasOwn(propsData, key)
   let value = propsData[key]
   // boolean casting
   const booleanIndex = getTypeIndex(Boolean, prop.type)
   if (booleanIndex > -1) {
+    // 如果未传入且没有默认值则默认为false
     if (absent && !hasOwn(prop, 'default')) {
       value = false
+    // 1.如果父组件传入且是空字符串，boolean在前面(优先级高)，则默认为true
+    // 2.如果父组件传入的值与定义的key值一样，则默认为true
     } else if (value === '' || value === hyphenate(key)) {
       // only cast empty string / same name to boolean if
       // boolean has higher priority
@@ -47,6 +51,7 @@ export function validateProp (
     // since the default value is a fresh copy,
     // make sure to observe it.
     const prevShouldObserve = shouldObserve
+    // 如果父组件没有传入，针对子组件默认的对象/数组，就需要进行递归处理
     toggleObserving(true)
     observe(value)
     toggleObserving(prevShouldObserve)
@@ -81,6 +86,7 @@ function getPropDefaultValue (vm: ?Component, prop: PropOptions, key: string): a
   }
   // the raw prop value was also undefined from previous render,
   // return previous default value to avoid unnecessary watcher trigger
+  // 如果当前组件有默认值且父组件没有传入，当当前组件重新渲染的时候，直接返回上一次的值，防止触发一些不必要的watcher(比如user watcher)
   if (vm && vm.$options.propsData &&
     vm.$options.propsData[key] === undefined &&
     vm._props[key] !== undefined
@@ -157,7 +163,7 @@ function assertType (value: any, type: Function): {
   if (simpleCheckRE.test(expectedType)) {
     const t = typeof value
     valid = t === expectedType.toLowerCase()
-    // for primitive wrapper objects
+    // 原始对象包装器 new String('12')等
     if (!valid && t === 'object') {
       valid = value instanceof type
     }

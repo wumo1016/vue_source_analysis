@@ -70,14 +70,17 @@ function initProps (vm: Component, propsOptions: Object) {
   const isRoot = !vm.$parent
   // root instance props should be converted
   if (!isRoot) {
+    // 因为非根实例的父组件中已经对传入的props属性值进行了递归处理，这里就不再需要
     toggleObserving(false)
   }
   for (const key in propsOptions) {
     keys.push(key)
+    // propsData 代表父组件传给子组件的数据
     const value = validateProp(key, propsOptions, propsData, vm)
     /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production') {
       const hyphenatedKey = hyphenate(key)
+      // 是否是HTML保留属性，比如style，class等
       if (isReservedAttribute(hyphenatedKey) ||
           config.isReservedAttr(hyphenatedKey)) {
         warn(
@@ -86,7 +89,10 @@ function initProps (vm: Component, propsOptions: Object) {
         )
       }
       defineReactive(props, key, value, () => {
+        // 对props[key]重新赋值的时候就会触发这个函数
         if (!isRoot && !isUpdatingChildComponent) {
+          // 不能直接对prop直接进行修改,因为这个会在父组件重新渲染的被重写
+          // 作为替代,可以使用 data 或 computed
           warn(
             `Avoid mutating a prop directly since the value will be ` +
             `overwritten whenever the parent component re-renders. ` +
@@ -100,9 +106,10 @@ function initProps (vm: Component, propsOptions: Object) {
       defineReactive(props, key, value)
     }
     // static props are already proxied on the component's prototype
-    // during Vue.extend(). We only need to proxy props defined at
-    // instantiation here.
+    // during Vue.extend(). We only need to proxy props defined at instantiation here.
+    // 如果是组件，对props的proxy的代理在Vue.extend中，因为这样可以避免在每次组件使用的时候都代理一次
     if (!(key in vm)) {
+      // this[key] = this[_props][key]
       proxy(vm, `_props`, key)
     }
   }

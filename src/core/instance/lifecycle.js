@@ -267,6 +267,7 @@ export function updateChildComponent (
   if (propsData && vm.$options.props) {
     toggleObserving(false)
     const props = vm._props
+    // _propKeys是在initProps的缓存的props的key数组
     const propKeys = vm.$options._propKeys || []
     for (let i = 0; i < propKeys.length; i++) {
       const key = propKeys[i]

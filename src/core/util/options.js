@@ -319,7 +319,7 @@ function normalizeProps(options: Object, vm: ? Component) {
     while (i--) {
       val = props[i]
       if (typeof val === 'string') {
-        name = camelize(val)
+        name = camelize(val) // 将字符串都处理成驼峰写法
         res[name] = {
           type: null
         }
@@ -422,7 +422,7 @@ export function mergeOptions(
   if (typeof child === 'function') {
     child = child.options
   }
-
+  // 将不同写法都处理成对象写法
   normalizeProps(child, vm)
   normalizeInject(child, vm)
   normalizeDirectives(child)
