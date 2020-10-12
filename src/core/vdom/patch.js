@@ -720,7 +720,6 @@ export function createPatchFunction (backend) {
   }
   // isUndef 是否是 undefined/null
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
-    debugger
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
       return
