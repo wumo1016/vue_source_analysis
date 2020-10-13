@@ -210,6 +210,8 @@ export function parse (
     shouldDecodeNewlinesForHref: options.shouldDecodeNewlinesForHref,
     shouldKeepComment: options.comments,
     outputSourceRange: options.outputSourceRange,
+    // unary 是否是自闭和标签
+    // 解析开始标签调用的函数
     start (tag, attrs, unary, start, end) {
       // check namespace.
       // inherit parent ns if there is one
@@ -296,7 +298,7 @@ export function parse (
         closeElement(element)
       }
     },
-
+    // 解析结束标签调用的函数
     end (tag, start, end) {
       const element = stack[stack.length - 1]
       // pop stack
@@ -307,7 +309,7 @@ export function parse (
       }
       closeElement(element)
     },
-
+    // 解析文本标签调用的函数
     chars (text: string, start: number, end: number) {
       if (!currentParent) {
         if (process.env.NODE_ENV !== 'production') {
@@ -379,6 +381,7 @@ export function parse (
         }
       }
     },
+    // 
     comment (text: string, start, end) {
       // adding anything as a sibling to the root node is forbidden
       // comments should still be allowed, but ignored

@@ -13,6 +13,9 @@ export const createCompiler = createCompilerCreator(function baseCompile (
   options: CompilerOptions
 ): CompiledResult {
   const ast = parse(template.trim(), options)
+  const astCopy = Object.assign({}, ast)
+  console.log(astCopy)
+  console.log(ast)
   if (options.optimize !== false) {
     optimize(ast, options)
   }
