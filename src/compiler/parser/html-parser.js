@@ -64,7 +64,7 @@ export function parseHTML (html, options) {
     if (!lastTag || !isPlainTextElement(lastTag)) {
       let textEnd = html.indexOf('<')
       if (textEnd === 0) {
-        // Comment:
+        // 注释和条件注释节点，直接前进至它们的结尾位置
         if (comment.test(html)) {
           const commentEnd = html.indexOf('-->')
 
@@ -87,7 +87,7 @@ export function parseHTML (html, options) {
           }
         }
 
-        // Doctype:
+        // 文档类型节点，前进它自身的长度
         const doctypeMatch = html.match(doctype)
         if (doctypeMatch) {
           advance(doctypeMatch[0].length)
@@ -214,9 +214,11 @@ export function parseHTML (html, options) {
     const unarySlash = match.unarySlash
 
     if (expectHTML) {
+      // 如果是p标签，检查p标签中是否有p内不能书写的标签，如果有，将其去除，与浏览器保持一致
       if (lastTag === 'p' && isNonPhrasingTag(tagName)) {
         parseEndTag(lastTag)
       }
+      // 嵌套p标签
       if (canBeLeftOpenTag(tagName) && lastTag === tagName) {
         parseEndTag(tagName)
       }
@@ -295,6 +297,7 @@ export function parseHTML (html, options) {
         options.start(tagName, [], true, start, end)
       }
     } else if (lowerCasedTagName === 'p') {
+      // 如果一直找不到开始标签，且是p标签，则自动添加一个开始标签
       if (options.start) {
         options.start(tagName, [], false, start, end)
       }
