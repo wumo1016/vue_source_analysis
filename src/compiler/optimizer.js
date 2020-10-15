@@ -51,7 +51,7 @@ function markStatic (node: ASTNode) {
     for (let i = 0, l = node.children.length; i < l; i++) {
       const child = node.children[i]
       markStatic(child)
-      if (!child.static) {
+      if (!child.static) { // 如果有一个子节点不是静态节点，当前接节点就不是静态节点
         node.static = false
       }
     }
@@ -75,6 +75,7 @@ function markStaticRoots (node: ASTNode, isInFor: boolean) {
     // For a node to qualify as a static root, it should have children that
     // are not just static text. Otherwise the cost of hoisting out will
     // outweigh the benefits and it's better off to just always render it fresh.
+    // 一个静态根节点不能是只有一个children(且是文本节点)
     if (node.static && node.children.length && !(
       node.children.length === 1 &&
       node.children[0].type === 3
@@ -107,7 +108,7 @@ function isStatic (node: ASTNode): boolean {
   return !!(node.pre || (
     !node.hasBindings && // no dynamic bindings
     !node.if && !node.for && // not v-if or v-for or v-else
-    !isBuiltInTag(node.tag) && // not a built-in
+    !isBuiltInTag(node.tag) && // not a built-in 不是内置组件
     isPlatformReservedTag(node.tag) && // not a component
     !isDirectChildOfTemplateFor(node) &&
     Object.keys(node).every(isStaticKey)
