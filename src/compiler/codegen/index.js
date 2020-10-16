@@ -257,6 +257,7 @@ export function genData (el: ASTElement, state: CodegenState): string {
   }
   // event handlers
   if (el.events) {
+    // on:{"click":function($event){return clickHandler($event)}}
     data += `${genHandlers(el.events, false)},`
   }
   if (el.nativeEvents) {

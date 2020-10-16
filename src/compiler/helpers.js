@@ -138,6 +138,7 @@ export function addHandler (
 
   const handlers = events[name]
   /* istanbul ignore if */
+  // 如果多次添加同一种事件，将其处理成数组形式，后添加的默认在后面
   if (Array.isArray(handlers)) {
     important ? handlers.unshift(newHandler) : handlers.push(newHandler)
   } else if (handlers) {

@@ -60,6 +60,7 @@ export function genHandlers (
   let staticHandlers = ``
   let dynamicHandlers = ``
   for (const name in events) {
+    // 例如 function($event){return clickHandler($event)}
     const handlerCode = genHandler(events[name])
     if (events[name] && events[name].dynamic) {
       dynamicHandlers += `${name},${handlerCode},`
@@ -101,7 +102,7 @@ function genHandler (handler: ASTElementHandler | Array<ASTElementHandler>): str
   if (Array.isArray(handler)) {
     return `[${handler.map(handler => genHandler(handler)).join(',')}]`
   }
-
+  // a.b a['b'] a["b"] a[0] a[b]
   const isMethodPath = simplePathRE.test(handler.value)
   const isFunctionExpression = fnExpRE.test(handler.value)
   const isFunctionInvocation = simplePathRE.test(handler.value.replace(fnInvokeRE, ''))
@@ -114,6 +115,7 @@ function genHandler (handler: ASTElementHandler | Array<ASTElementHandler>): str
     if (__WEEX__ && handler.params) {
       return genWeexHandler(handler.params, handler.value)
     }
+    // 如果是 @click="clickHandler()"这种方式，直接走这个
     return `function($event){${
       isFunctionInvocation ? `return ${handler.value}` : handler.value
     }}` // inline statement

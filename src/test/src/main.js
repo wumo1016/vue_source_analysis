@@ -1,23 +1,36 @@
 import Vue from "vue";
 import App from "./App.vue";
 
+const Child = {
+  template: `
+  <button @click="clickHandler($event)">click me</button>
+  `,
+  methods: {
+    clickHandler(e) {
+      console.log('button click', e)
+      this.$emit('select')
+    }
+  },
+}
 
 new Vue({
   el: '#app',
+  components: {
+    Child
+  },
   template: `
-  <ul :class="bindCls" class="list" v-if="isShow">
-    <li v-for="(item,index) in data" @click="clickItem(index)">{{item}}:{{index}}</li>
-  </ul>
+  <div>
+    <Child @select="selectHandler" @click.native.prevent="clickHandler"></Child>
+  </div>
   `,
   data: {
-    bindCls: 's',
-    isShow: true,
-    data: [ 1,2,3,4 ]
   },
   methods: {
-    clickItem(index){
-      console.log(index)
-    }
+    selectHandler() {
+      console.log('child select')
+    },
+    clickHandler() {
+      console.log('child click')
+    },
   }
-  // render: h => h(App)
 })
