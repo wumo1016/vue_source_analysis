@@ -9,7 +9,7 @@ const Child = {
     clickHandler(e) {
       console.log('button click', e)
       this.$emit('select')
-    }
+    },
   },
 }
 
@@ -32,5 +32,6 @@ new Vue({
     clickHandler() {
       console.log('child click')
     },
+    selectHandler1(){}
   }
 })

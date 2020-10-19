@@ -34,7 +34,7 @@ const normalizeEvent = cached((name: string): {
 })
 
 export function createFnInvoker (fns: Function | Array<Function>, vm: ?Component): Function {
-  function invoker () {
+  function invoker () { // 真正执行的事件函数
     const fns = invoker.fns
     if (Array.isArray(fns)) {
       const cloned = fns.slice()
@@ -62,7 +62,7 @@ export function updateListeners (
   for (name in on) {
     def = cur = on[name]
     old = oldOn[name]
-    event = normalizeEvent(name)
+    event = normalizeEvent(name) // 解析事件修饰符
     /* istanbul ignore if */
     if (__WEEX__ && isPlainObject(def)) {
       cur = def.handler
@@ -80,6 +80,7 @@ export function updateListeners (
       if (isTrue(event.once)) {
         cur = on[name] = createOnceHandler(event.name, cur, event.capture)
       }
+      // 添加事件
       add(event.name, cur, event.capture, event.passive, event.params)
     } else if (cur !== old) {
       old.fns = cur
