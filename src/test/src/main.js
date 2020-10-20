@@ -1,37 +1,35 @@
 import Vue from "vue";
 import App from "./App.vue";
 
-const Child = {
+const child = {
   template: `
-  <button @click="clickHandler($event)">click me</button>
+    <input :value="value" @input="updateValue"/>
   `,
-  methods: {
-    clickHandler(e) {
-      console.log('button click', e)
-      this.$emit('select')
-    },
+  props: [ 'value' ],
+  model: {
+    event: 'change', // 默认是input，自定义事件名
   },
+  mounted(){
+  },
+  methods: {
+    updateValue(e){
+      this.$emit('change', e.target.value)
+    }
+  }
 }
 
 new Vue({
   el: '#app',
-  components: {
-    Child
-  },
+  components: { child },
   template: `
   <div>
-    <Child @select="selectHandler" @click.native.prevent="clickHandler"></Child>
+    <p>{{ message }}</p>
+    <child v-model="message"/>
   </div>
   `,
   data: {
+    message: '123',
   },
   methods: {
-    selectHandler() {
-      console.log('child select')
-    },
-    clickHandler() {
-      console.log('child click')
-    },
-    selectHandler1(){}
   }
 })

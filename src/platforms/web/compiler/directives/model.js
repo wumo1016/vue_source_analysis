@@ -25,7 +25,7 @@ export default function model (
   if (process.env.NODE_ENV !== 'production') {
     // inputs with type="file" are read only and setting the input's
     // value will throw an error.
-    if (tag === 'input' && type === 'file') {
+    if (tag === 'input' && type === 'file') { // 上传文件组件是只读的
       warn(
         `<${el.tag} v-model="${value}" type="file">:\n` +
         `File inputs are read only. Use a v-on:change listener instead.`,
@@ -46,7 +46,8 @@ export default function model (
     genRadioModel(el, value, modifiers)
   } else if (tag === 'input' || tag === 'textarea') {
     genDefaultModel(el, value, modifiers)
-  } else if (!config.isReservedTag(tag)) {
+  } else if (!config.isReservedTag(tag)) { // 是一个组件
+    // 就是为el添加一个model属性 el.model ={ value, expression, callback }
     genComponentModel(el, value, modifiers)
     // component v-model doesn't need extra runtime
     return false
@@ -161,14 +162,14 @@ function genDefaultModel (
   if (number) {
     valueExpression = `_n(${valueExpression})`
   }
-
+  // v-model code = "message=$event.target.value"
   let code = genAssignmentCode(value, valueExpression)
   if (needCompositionGuard) {
     code = `if($event.target.composing)return;${code}`
   }
 
-  addProp(el, 'value', `(${value})`)
-  addHandler(el, event, code, null, true)
+  addProp(el, 'value', `(${value})`) // 给input设置属性value
+  addHandler(el, event, code, null, true) // 给input添加事件
   if (trim || number) {
     addHandler(el, 'blur', '$forceUpdate()')
   }

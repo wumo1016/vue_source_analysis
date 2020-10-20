@@ -316,10 +316,12 @@ function genDirectives (el: ASTElement, state: CodegenState): string | void {
   for (i = 0, l = dirs.length; i < l; i++) {
     dir = dirs[i]
     needRuntime = true
+    // state.directives实际上就是 web/compiler/directives/index.js 中的对象
     const gen: DirectiveFunction = state.directives[dir.name]
     if (gen) {
       // compile-time directive that manipulates AST.
       // returns true if it also needs a runtime counterpart.
+      // v-model 返回false
       needRuntime = !!gen(el, dir, state.warn)
     }
     if (needRuntime) {

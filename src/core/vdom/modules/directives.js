@@ -32,13 +32,13 @@ function _update (oldVnode, vnode) {
     oldDir = oldDirs[key]
     dir = newDirs[key]
     if (!oldDir) {
-      // new directive, bind
+      // new directive, bind 调用指令的钩子
       callHook(dir, 'bind', vnode, oldVnode)
       if (dir.def && dir.def.inserted) {
         dirsWithInsert.push(dir)
       }
     } else {
-      // existing directive, update
+      // existing directive, update 调用指令的钩子
       dir.oldValue = oldDir.value
       dir.oldArg = oldDir.arg
       callHook(dir, 'update', vnode, oldVnode)
@@ -54,7 +54,8 @@ function _update (oldVnode, vnode) {
         callHook(dirsWithInsert[i], 'inserted', vnode, oldVnode)
       }
     }
-    if (isCreate) {
+    if (isCreate) { // 新创建的时候为true
+      // 实际作用就是 vnode.data.hook.insert = callInsert
       mergeVNodeHook(vnode, 'insert', callInsert)
     } else {
       callInsert()
@@ -98,6 +99,7 @@ function normalizeDirectives (
       dir.modifiers = emptyModifiers
     }
     res[getRawDirName(dir)] = dir
+    // 找到。指令定义
     dir.def = resolveAsset(vm.$options, 'directives', dir.name, true)
   }
   // $flow-disable-line

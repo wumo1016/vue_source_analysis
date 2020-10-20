@@ -764,7 +764,7 @@ function processAttrs (el) {
   for (i = 0, l = list.length; i < l; i++) {
     name = rawName = list[i].name
     value = list[i].value
-    // 是否是指令属性 v-on @ : 等
+    // 是否是指令属性 v- @ : 等
     if (dirRE.test(name)) {
       // mark element as dynamic
       el.hasBindings = true
@@ -853,7 +853,7 @@ function processAttrs (el) {
         }
         // 实际上就是给el添加一个events/nativeEvents属性对象
         addHandler(el, name, value, modifiers, false, warn, list[i], isDynamic)
-      } else { // normal directives
+      } else { // normal directives 比如 v-model
         name = name.replace(dirRE, '')
         // parse arg
         const argMatch = name.match(argRE)
