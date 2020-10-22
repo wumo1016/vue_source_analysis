@@ -444,8 +444,8 @@ export function processElement (
   )
 
   processRef(element)
-  processSlotContent(element)
-  processSlotOutlet(element)
+  processSlotContent(element) // 解析父组件 slot="xxx"
+  processSlotOutlet(element) // 解析子组件 <slot name="xxx"/>
   processComponent(element)
   for (let i = 0; i < transforms.length; i++) {
     element = transforms[i](element, options) || element
@@ -637,6 +637,7 @@ function processSlotContent (el) {
     // preserve slot as an attribute for native shadow DOM compat
     // only for non-scoped slots.
     if (el.tag !== 'template' && !el.slotScope) {
+      // 将slot对象添加进el得attrs数组中
       addAttr(el, 'slot', slotTarget, getRawBindingAttr(el, 'slot'))
     }
   }

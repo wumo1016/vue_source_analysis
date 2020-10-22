@@ -3,33 +3,30 @@ import App from "./App.vue";
 
 const child = {
   template: `
-    <input :value="value" @input="updateValue"/>
+    <div>
+      <header><slot name="header"></slot></header>
+      <slot></slot>
+      <footer><slot name="footer"></slot></footer>
+    </div>
   `,
-  props: [ 'value' ],
-  model: {
-    event: 'change', // 默认是input，自定义事件名
-  },
-  mounted(){
-  },
-  methods: {
-    updateValue(e){
-      this.$emit('change', e.target.value)
-    }
-  }
 }
 
 new Vue({
   el: '#app',
-  components: { child },
+  components: {
+    child
+  },
   template: `
   <div>
-    <p>{{ message }}</p>
-    <child v-model="message"/>
+    <child>
+      <div slot="header">头部</div>
+      <div>中部</div>
+      <div slot="footer">尾部</div>
+    </child>
   </div>
   `,
   data: {
     message: '123',
   },
-  methods: {
-  }
+  methods: {}
 })
