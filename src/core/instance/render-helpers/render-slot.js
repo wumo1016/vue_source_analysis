@@ -26,6 +26,8 @@ export function renderSlot (
     }
     nodes = scopedSlotFn(props) || fallback
   } else {
+    // $slots是在 render.js 中的initRender方法中获取的
+    // 如果没有在父组件中定义相应插槽的内容，将会使用slot标签内的默认内容，就是fallback
     nodes = this.$slots[name] || fallback
   }
 

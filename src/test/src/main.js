@@ -4,11 +4,14 @@ import App from "./App.vue";
 const child = {
   template: `
     <div>
-      <header><slot name="header"></slot></header>
-      <slot></slot>
-      <footer><slot name="footer"></slot></footer>
+      <slot text="123456" :msg="msg"></slot>
     </div>
   `,
+  data(){
+    return {
+      msg: '测试'
+    }
+  }
 }
 
 new Vue({
@@ -19,9 +22,10 @@ new Vue({
   template: `
   <div>
     <child>
-      <div slot="header">头部</div>
-      <div>中部</div>
-      <div slot="footer">尾部</div>
+      <template v-slot="props">
+        <div>{{ props.text }}</div>
+        <div>{{ props.msg }}</div>
+      </template>
     </child>
   </div>
   `,

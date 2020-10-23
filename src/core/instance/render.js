@@ -34,6 +34,8 @@ export function initRender(vm: Component) {
   const options = vm.$options
   const parentVnode = vm.$vnode = options._parentVnode // the placeholder node in parent tree
   const renderContext = parentVnode && parentVnode.context
+  // options._renderChildren就是父组件中子组件包裹的子元素vnode
+  // 返回一个对象，比如： vm.$slots = { header: VNode, footer: VNode }
   vm.$slots = resolveSlots(options._renderChildren, renderContext)
   vm.$scopedSlots = emptyObject
   
