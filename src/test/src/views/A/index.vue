@@ -1,21 +1,16 @@
 <template>
-  <div v-if="flag">
-    div标签
+  <div>
+    <input v-model="msg" />
   </div>
-  <ul v-else>
-    ul标签
-  </ul>
 </template>
 
 <script>
-// import Headers from "@/components/headers.vue";
 export default {
   name: "A",
-  props: {
-    flag: Boolean
-  },
-  methods: {
-    test() {}
+  data(){
+    return {
+      msg: 'A页面'
+    }
   }
 };
 </script>

@@ -52,7 +52,7 @@ const patternTypes: Array<Function> = [String, RegExp, Array]
 
 export default {
   name: 'keep-alive',
-  abstract: true,
+  abstract: true, // 抽象组件 在_init方法中initLifecycle中建立父子关系
 
   props: {
     include: patternTypes,
@@ -75,7 +75,7 @@ export default {
     this.$watch('include', val => {
       pruneCache(this, name => matches(val, name))
     })
-    this.$watch('exclude', val => {
+    this.$watch('exclude', val => { 
       pruneCache(this, name => !matches(val, name))
     })
   },
@@ -112,6 +112,7 @@ export default {
         cache[key] = vnode
         keys.push(key)
         // prune oldest entry
+        // LRU原则 删除最近最少使用的key的vnode
         if (this.max && keys.length > parseInt(this.max)) {
           pruneCacheEntry(cache, keys[0], keys, this._vnode)
         }

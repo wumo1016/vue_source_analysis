@@ -305,6 +305,7 @@ function isInInactiveTree (vm) {
 
 export function activateChildComponent (vm: Component, direct?: boolean) {
   if (direct) {
+    // _directInactive 变量是避免同一个组件多次执行，定义在initLifecycle方法中
     vm._directInactive = false
     if (isInInactiveTree(vm)) {
       return

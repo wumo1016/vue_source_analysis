@@ -224,7 +224,7 @@ export function createPatchFunction (backend) {
     }
     */
     if (isDef(i)) {
-      // keep-alive 逻辑
+      // keep-alive 逻辑 i.keepAlive在keep-alive组件内部赋值的
       const isReactivated = isDef(vnode.componentInstance) && i.keepAlive
       // 会执行到 create-component.js 中的 componentVNodeHooks 中的init方法
       if (isDef(i = i.hook) && isDef(i = i.init)) {

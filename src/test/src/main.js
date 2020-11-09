@@ -1,36 +1,28 @@
 import Vue from "vue";
 import App from "./App.vue";
-
-const child = {
-  template: `
-    <div>
-      <slot text="123456" :msg="msg"></slot>
-    </div>
-  `,
-  data(){
-    return {
-      msg: '测试'
-    }
-  }
-}
+import A from './views/A'
+import B from './views/B'
 
 new Vue({
   el: '#app',
   components: {
-    child
+    A,
+    B
   },
   template: `
   <div>
-    <child>
-      <template v-slot="props">
-        <div>{{ props.text }}</div>
-        <div>{{ props.msg }}</div>
-      </template>
-    </child>
+    <keep-alive>
+      <component :is="currentComp" />
+    </keep-alive>
+    <button @click="change">切换</button>
   </div>
   `,
   data: {
-    message: '123',
+    currentComp: 'A',
   },
-  methods: {}
+  methods: {
+    change(){
+      this.currentComp = this.currentComp === 'A' ? 'B' : 'A'
+    }
+  }
 })

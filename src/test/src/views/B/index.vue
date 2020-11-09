@@ -1,12 +1,17 @@
 <template>
-  <Headers />
+  <div>
+    <input v-model="msg" />
+  </div>
 </template>
 
 <script>
-import Headers from "@/components/headers.vue";
 export default {
-  name: 'B',
-  components: { Headers }
+  name: "B",
+  data(){
+    return {
+      msg: 'B页面'
+    }
+  }
 };
 </script>
 
