@@ -94,9 +94,10 @@ export default {
     return h(tag, null, children)
   },
 
-  updated () {
+  updated () { // 位置被移动元素的动画
     const children: Array<VNode> = this.prevChildren
     const moveClass: string = this.moveClass || ((this.name || 'v') + '-move')
+    // hasMove 检测是否定义move的class名，或者定义的class是否具有缓动效果
     if (!children.length || !this.hasMove(children[0].elm, moveClass)) {
       return
     }
@@ -110,6 +111,7 @@ export default {
     // force reflow to put everything in position
     // assign to this to avoid being removed in tree-shaking
     // $flow-disable-line
+    // 强制重绘
     this._reflow = document.body.offsetHeight
 
     children.forEach((c: VNode) => {
