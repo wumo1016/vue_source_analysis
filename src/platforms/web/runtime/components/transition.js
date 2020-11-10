@@ -13,7 +13,7 @@ import {
 
 export const transitionProps = {
   name: String,
-  appear: Boolean,
+  appear: Boolean, // 首次渲染是否有动画效果
   css: Boolean,
   mode: String,
   type: String,
@@ -150,7 +150,7 @@ export default {
       : isPrimitive(child.key)
         ? (String(child.key).indexOf(id) === 0 ? child.key : id + child.key)
         : child.key
-
+    // 将子节点data添加一个transition属性，值是transition组件上写的属性和事件
     const data: Object = (child.data || (child.data = {})).transition = extractTransitionData(this)
     const oldRawChild: VNode = this._vnode
     const oldChild: VNode = getRealChild(oldRawChild)

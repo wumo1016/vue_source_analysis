@@ -71,7 +71,7 @@ export function enter (vnode: VNodeWithData, toggleDisplay: ?() => void) {
   }
 
   const isAppear = !context._isMounted || !vnode.isRootInsert
-
+  // 如果是第一次渲染 且没有配置appear，则不执行过渡动画
   if (isAppear && !appear && appear !== '') {
     return
   }
@@ -324,7 +324,7 @@ function getHookArgumentsLength (fn: Function): boolean {
 }
 
 function _enter (_: any, vnode: VNodeWithData) {
-  if (vnode.data.show !== true) {
+  if (vnode.data.show !== true) { // 处理 v-show 逻辑
     enter(vnode)
   }
 }

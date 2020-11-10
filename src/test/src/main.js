@@ -11,18 +11,13 @@ new Vue({
   },
   template: `
   <div>
-    <keep-alive>
-      <component :is="currentComp" />
-    </keep-alive>
-    <button @click="change">切换</button>
+    <button @click="show=!show">toggle</button>
+    <transition :appear="true" name="fade">
+      <p v-if="show">hello</p>
+    </transition>
   </div>
   `,
   data: {
-    currentComp: 'A',
+    show: true,
   },
-  methods: {
-    change(){
-      this.currentComp = this.currentComp === 'A' ? 'B' : 'A'
-    }
-  }
 })
