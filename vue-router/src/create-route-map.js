@@ -82,6 +82,10 @@ function addRouteRecord (
 
   const pathToRegexpOptions: PathToRegexpOptions =
     route.pathToRegexpOptions || {}
+  // normalizePath 对path进行一些处理
+  // 1.如果是 / 开头直接返回path
+  // 2.如果没有 parent 直接返回path
+  // 3.如果有parent，且当前path不是以/开头，怎返回  `${parent.path}/${path}`
   const normalizedPath = normalizePath(path, parent, pathToRegexpOptions.strict)
 
   if (typeof route.caseSensitive === 'boolean') {

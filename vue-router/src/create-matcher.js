@@ -1,16 +1,31 @@
 /* @flow */
 
 import type VueRouter from './index'
-import { resolvePath } from './util/path'
-import { assert, warn } from './util/warn'
-import { createRoute } from './util/route'
-import { fillParams } from './util/params'
-import { createRouteMap } from './create-route-map'
-import { normalizeLocation } from './util/location'
-import { decode } from './util/query'
+import {
+  resolvePath
+} from './util/path'
+import {
+  assert,
+  warn
+} from './util/warn'
+import {
+  createRoute
+} from './util/route'
+import {
+  fillParams
+} from './util/params'
+import {
+  createRouteMap
+} from './create-route-map'
+import {
+  normalizeLocation
+} from './util/location'
+import {
+  decode
+} from './util/query'
 
 export type Matcher = {
-  match: (raw: RawLocation, current?: Route, redirectedFrom?: Location) => Route;
+  match: (raw: RawLocation, current ?: Route, redirectedFrom ?: Location) => Route;
   addRoutes: (routes: Array<RouteConfig>) => void;
 };
 
@@ -18,7 +33,11 @@ export function createMatcher (
   routes: Array<RouteConfig>,
   router: VueRouter
 ): Matcher {
-  const { pathList, pathMap, nameMap } = createRouteMap(routes)
+  const {
+    pathList,
+    pathMap,
+    nameMap
+  } = createRouteMap(routes)
 
   function addRoutes (routes) {
     createRouteMap(routes, pathList, pathMap, nameMap)
@@ -26,11 +45,22 @@ export function createMatcher (
 
   function match (
     raw: RawLocation,
-    currentRoute?: Route,
-    redirectedFrom?: Location
+    currentRoute ?: Route,
+    redirectedFrom ?: Location
   ): Route {
+    debugger
     const location = normalizeLocation(raw, currentRoute, false, router)
-    const { name } = location
+    /*
+    {
+      _normalized: true,
+      path,
+      query,
+      hash
+    }
+    */
+    const {
+      name
+    } = location
 
     if (name) {
       const record = nameMap[name]
@@ -80,7 +110,9 @@ export function createMatcher (
       : originalRedirect
 
     if (typeof redirect === 'string') {
-      redirect = { path: redirect }
+      redirect = {
+        path: redirect
+      }
     }
 
     if (!redirect || typeof redirect !== 'object') {
@@ -93,8 +125,15 @@ export function createMatcher (
     }
 
     const re: Object = redirect
-    const { name, path } = re
-    let { query, hash, params } = location
+    const {
+      name,
+      path
+    } = re
+    let {
+      query,
+      hash,
+      params
+    } = location
     query = re.hasOwnProperty('query') ? re.query : query
     hash = re.hasOwnProperty('hash') ? re.hash : hash
     params = re.hasOwnProperty('params') ? re.params : params
@@ -152,9 +191,9 @@ export function createMatcher (
   }
 
   function _createRoute (
-    record: ?RouteRecord,
+    record: ? RouteRecord,
     location: Location,
-    redirectedFrom?: Location
+    redirectedFrom ?: Location
   ): Route {
     if (record && record.redirect) {
       return redirect(record, redirectedFrom || location)

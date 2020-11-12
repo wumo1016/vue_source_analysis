@@ -17,6 +17,10 @@ const resolve = _path => path.resolve(__dirname, '../', _path)
 module.exports = [
   // browser dev
   {
+    file: resolve('../src/test/node_modules/vue-router/dist/vue-router.esm.js'),
+    format: 'es'
+  },
+  {
     file: resolve('dist/vue-router.js'),
     format: 'umd',
     env: 'development'
@@ -30,10 +34,10 @@ module.exports = [
     file: resolve('dist/vue-router.common.js'),
     format: 'cjs'
   },
-  {
-    file: resolve('dist/vue-router.esm.js'),
-    format: 'es'
-  },
+  // {
+  //   file: resolve('dist/vue-router.esm.js'),
+  //   format: 'es'
+  // },
   {
     file: resolve('dist/vue-router.esm.browser.js'),
     format: 'es',

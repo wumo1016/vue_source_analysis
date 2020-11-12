@@ -31,6 +31,7 @@
     "routing"
   ],
   "scripts": {
+    "start": "npm run dev:dist",
     "dev": "node examples/server.js",
     "dev:dist": "rollup -wm -c build/rollup.dev.config.js",
     "build": "node build/build.js",

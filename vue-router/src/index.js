@@ -1,5 +1,4 @@
 /* @flow */
-
 import { install } from './install'
 import { START } from './util/route'
 import { assert } from './util/warn'
@@ -9,7 +8,6 @@ import { createMatcher } from './create-matcher'
 import { normalizeLocation } from './util/location'
 import { supportsPushState } from './util/push-state'
 import { handleScroll } from './util/scroll'
-
 import { HashHistory } from './history/hash'
 import { HTML5History } from './history/html5'
 import { AbstractHistory } from './history/abstract'
@@ -44,7 +42,7 @@ export default class VueRouter {
     this.beforeHooks = []
     this.resolveHooks = []
     this.afterHooks = []
-    this.matcher = createMatcher(options.routes || [], this)
+    this.matcher = createMatcher(options.routes || [], this) // { match, addRoutes }
 
     let mode = options.mode || 'hash'
     this.fallback =
@@ -90,7 +88,7 @@ export default class VueRouter {
           `before creating root instance.`
       )
 
-    this.apps.push(app)
+    this.apps.push(app) // app就是组件实例
 
     // set up app destroyed handler
     // https://github.com/vuejs/vue-router/issues/2639

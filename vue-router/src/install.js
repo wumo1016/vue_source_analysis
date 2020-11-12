@@ -20,7 +20,7 @@ export function install (Vue) {
 
   Vue.mixin({
     beforeCreate () {
-      if (isDef(this.$options.router)) {
+      if (isDef(this.$options.router)) { // 跟实例
         this._routerRoot = this
         this._router = this.$options.router
         this._router.init(this)
