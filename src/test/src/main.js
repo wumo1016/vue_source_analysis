@@ -1,23 +1,22 @@
 import Vue from "vue";
 import App from "./App.vue";
-import A from './views/A'
-import B from './views/B'
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
+
+const A = { template: '<div>A组件</div>' }
+const B = { template: '<div>B组件</div>' }
+
+const routes = [
+  { path: '/a', component: A },
+  { path: '/b', component: B }
+]
+
+const router = new VueRouter({
+  routes
+})
 
 new Vue({
   el: '#app',
-  components: {
-    A,
-    B
-  },
-  template: `
-  <div>
-    <button @click="show=!show">toggle</button>
-    <transition :appear="true" name="fade">
-      <p v-if="show">hello</p>
-    </transition>
-  </div>
-  `,
-  data: {
-    show: true,
-  },
+  router,
+  render: h => h(App),
 })

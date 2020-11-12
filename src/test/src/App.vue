@@ -1,19 +1,17 @@
 <template>
   <div>
-    App
+    <router-link to="/a">
+      <button>A</button>
+    </router-link>
+    <router-link to="/b">
+      <button>B</button>
+    </router-link>
+    <router-view></router-view>
   </div>
 </template>
 <script>
-// import A from './views/A/index'
 export default {
   name: "App",
-  // components: { A },
-  data() {
-    return {
-    };
-  },
-  methods: {
-  }
 };
 </script>
 
