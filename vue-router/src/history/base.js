@@ -80,8 +80,8 @@ export class History {
 
   transitionTo (
     location: RawLocation,
-    onComplete?: Function,
-    onAbort?: Function
+    onComplete?: Function, // 成功回调
+    onAbort?: Function // 失败回调
   ) {
     let route
     // catch redirect option https://github.com/vuejs/vue-router/issues/3201
@@ -163,14 +163,14 @@ export class History {
       this.ensureURL()
       return abort(createNavigationDuplicatedError(current, route))
     }
-
+    // 导航守卫相关
     const { updated, deactivated, activated } = resolveQueue(
       this.current.matched,
       route.matched
     )
 
     const queue: Array<?NavigationGuard> = [].concat(
-      // in-component leave guards
+      // 在失活的组件中调用离开守卫
       extractLeaveGuards(deactivated),
       // global before hooks
       this.router.beforeHooks,

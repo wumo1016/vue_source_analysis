@@ -48,7 +48,6 @@ export function createMatcher (
     currentRoute ?: Route,
     redirectedFrom ?: Location
   ): Route {
-    debugger
     const location = normalizeLocation(raw, currentRoute, false, router)
     /*
     {
