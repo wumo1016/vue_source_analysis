@@ -1,22 +1,42 @@
 import Vue from "vue";
 import App from "./App.vue";
-import VueRouter from 'vue-router'
-Vue.use(VueRouter)
+import Vuex from 'vuex'
+Vue.use(Vuex)
 
-const A = { template: '<div>A组件</div>' }
-const B = { template: '<div>B组件</div>' }
+const moduleA = {
+  namespaced: true,
+  state: {
+    count: 1
+  },
+  getters: {
+    computedCount(){
+      return state.count + 1
+    }
+  },
+  mutations: {
+    increment(state){
+      state.count++
+    }
+  },
+  actions: {
+    increment({ commit }){
+      commit('increment')
+    }
+  },
+}
+const moduleB = {
 
-const routes = [
-  { path: '/a', component: A },
-  { path: '/b', component: B }
-]
+}
 
-const router = new VueRouter({
-  routes
+const store = new Vuex.Store({
+  modules: {
+    a: moduleA,
+    b: moduleB
+  },
 })
 
 new Vue({
   el: '#app',
-  router,
+  store,
   render: h => h(App),
 })

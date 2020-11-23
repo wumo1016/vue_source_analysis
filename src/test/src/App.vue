@@ -1,12 +1,6 @@
 <template>
   <div>
-    <router-link to="/a">
-      <button>A</button>
-    </router-link>
-    <router-link to="/b">
-      <button>B</button>
-    </router-link>
-    <router-view></router-view>
+    123
   </div>
 </template>
 <script>
@@ -15,8 +9,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-</style>
-
-
-
+<style lang="scss"></style>

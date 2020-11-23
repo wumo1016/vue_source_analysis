@@ -34,10 +34,10 @@ module.exports = [
     file: resolve('dist/vue-router.common.js'),
     format: 'cjs'
   },
-  // {
-  //   file: resolve('dist/vue-router.esm.js'),
-  //   format: 'es'
-  // },
+  {
+    file: resolve('dist/vue-router.esm.js'),
+    format: 'es'
+  },
   {
     file: resolve('dist/vue-router.esm.browser.js'),
     format: 'es',
