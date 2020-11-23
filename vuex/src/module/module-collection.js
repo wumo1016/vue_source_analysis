@@ -34,12 +34,12 @@ export default class ModuleCollection {
     if (path.length === 0) {
       this.root = newModule
     } else {
-      const parent = this.get(path.slice(0, -1))
-      parent.addChild(path[path.length - 1], newModule)
+      const parent = this.get(path.slice(0, -1)) // 获取上一级 Module
+      parent.addChild(path[path.length - 1], newModule) // 将当前 parent._children[key] = newModule
     }
 
     // register nested modules
-    if (rawModule.modules) {
+    if (rawModule.modules) { // 建立父子关系
       forEachValue(rawModule.modules, (rawChildModule, key) => {
         this.register(path.concat(key), rawChildModule, runtime)
       })

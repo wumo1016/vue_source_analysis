@@ -1,6 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
-import Vuex from 'vuex'
+import Vuex, { Store } from 'vuex'
 Vue.use(Vuex)
 
 const moduleA = {
@@ -28,7 +28,10 @@ const moduleB = {
 
 }
 
-const store = new Vuex.Store({
+const store = new Store({
+  state: {
+    
+  },
   modules: {
     a: moduleA,
     b: moduleB
