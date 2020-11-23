@@ -24,7 +24,8 @@ module.exports = {
   output: {
     banner,
     file: '../src/test/node_modules/vuex/dist/vuex.esm.js',
-    format: 'es'
+    format: 'es',
+    name: 'Vuex'
   },
   onwarn: (msg, warn) => {
     if (!/Circular/.test(msg)) {
