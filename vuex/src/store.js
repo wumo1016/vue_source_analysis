@@ -330,6 +330,7 @@ function resetStoreVM (store, state, hot) {
 
 function installModule (store, rootState, path, module, hot) {
   const isRoot = !path.length
+  // 会拿到模块键名+/ 例如 'a/'
   const namespace = store._modules.getNamespace(path)
 
   // register in namespace map
@@ -355,7 +356,9 @@ function installModule (store, rootState, path, module, hot) {
       Vue.set(parentState, moduleName, module.state)
     })
   }
-
+  // 本来在模块中提交cmomit/action时要带上模块名 即 commit('a/increment')
+  // local重写了模块的 commit 和 dispatch 方法，这样在模块内部可以直接使用 commit('increment')
+  // local方法内部调用了 commit('a/increment')
   const local = module.context = makeLocalContext(store, namespace, path)
 
   module.forEachMutation((mutation, key) => {

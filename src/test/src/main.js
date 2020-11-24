@@ -29,12 +29,12 @@ const moduleB = {
 }
 
 const store = new Store({
-  state: {
-    
-  },
   modules: {
     a: moduleA,
     b: moduleB
+  },
+  state: {
+    count: 1
   },
 })
 
