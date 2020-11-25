@@ -9,7 +9,7 @@ const moduleA = {
     count: 1
   },
   getters: {
-    computedCount(){
+    computedCount(state){
       return state.count + 1
     }
   },

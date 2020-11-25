@@ -148,7 +148,6 @@ export class Store {
     const result = entry.length > 1
       ? Promise.all(entry.map(handler => handler(payload)))
       : entry[0](payload)
-
     return new Promise((resolve, reject) => {
       result.then(res => {
         try {
