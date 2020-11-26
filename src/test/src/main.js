@@ -3,6 +3,9 @@ import App from "./App.vue";
 import Vuex, { Store } from 'vuex'
 Vue.use(Vuex)
 
+import createLogger from 'vuex/dist/logger'
+const debug = process.env.NODE_ENV !== 'production'
+
 const moduleA = {
   namespaced: true,
   state: {
@@ -36,6 +39,17 @@ const store = new Store({
   state: {
     count: 1
   },
+  mutations: {
+    increment(state){
+      state.count++
+    }
+  },
+  actions: {
+    increment({ commit }){
+      commit('increment')
+    }
+  },
+  plugins: debug ? [createLogger()] : []
 })
 
 new Vue({
