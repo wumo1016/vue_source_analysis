@@ -34,6 +34,17 @@ const resolve = p => {
     return path.resolve(__dirname, '../', p)
   }
 }
+
+/* format
+  cjs => commonjs 给node使用
+  es  => esModule webpack环境下vue-cli生成的项目使用
+  umd => amd + commonjs 直接使用
+*/
+
+/*
+  web-full = web-compiler(template->ast) + web-runtime
+*/
+
 // 各个版本的构建配置
 const builds = {
   // // Runtime only (CommonJS). Used by bundlers e.g. Webpack & Browserify

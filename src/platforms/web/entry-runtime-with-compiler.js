@@ -14,6 +14,7 @@ const idToTemplate = cached(id => {
   return el && el.innerHTML
 })
 
+// 高阶函数
 // runtime/index.js
 const mount = Vue.prototype.$mount
 Vue.prototype.$mount = function (
