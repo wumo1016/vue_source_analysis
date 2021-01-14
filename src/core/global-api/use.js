@@ -12,7 +12,7 @@ export function initUse (Vue: GlobalAPI) {
 
     // additional parameters
     const args = toArray(arguments, 1)
-    args.unshift(this)
+    args.unshift(this) // plugin(vue, ...args)
     if (typeof plugin.install === 'function') {
       plugin.install.apply(plugin, args)
     } else if (typeof plugin === 'function') {

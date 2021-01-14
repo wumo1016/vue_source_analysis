@@ -14,10 +14,11 @@ function Vue (options) {
   this._init(options)
 }
 
-initMixin(Vue)
-stateMixin(Vue)
-eventsMixin(Vue)
-lifecycleMixin(Vue)
-renderMixin(Vue)
+// 扩展原型 Vue.prototype
+initMixin(Vue) // _init
+stateMixin(Vue) // $data $props $set $delete $watch 
+eventsMixin(Vue) // $on $emit $off $once
+lifecycleMixin(Vue) // _update $forceUpdate $destroy
+renderMixin(Vue) // _render $nextTick
 
 export default Vue

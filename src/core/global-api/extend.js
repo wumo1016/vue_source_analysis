@@ -64,7 +64,7 @@ export function initExtend (Vue: GlobalAPI) {
     ASSET_TYPES.forEach(function (type) {
       Sub[type] = Super[type]
     })
-    // enable recursive self-lookup
+    // enable recursive self-lookup 递归组件
     if (name) {
       Sub.options.components[name] = Sub
     }

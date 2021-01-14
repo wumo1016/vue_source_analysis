@@ -84,6 +84,14 @@ function flushSchedulerQueue () {
   // 1.保证父组件先更新
   // 2.user Watcher要在render Watcher之前
   queue.sort((a, b) => a.id - b.id)
+  /* 
+  setTimeout(() => {
+    this.$nextTick(() => {
+      console.log(this.$el)
+    })
+    this.name = 789
+  })
+  */
 
   // do not cache length because more watchers might be pushed
   // as we run existing watchers

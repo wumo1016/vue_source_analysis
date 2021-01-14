@@ -50,7 +50,7 @@ export function initMixin (Vue: Class<Component>) {
     }
     // expose real self
     vm._self = vm
-    initLifecycle(vm) // 初始化声明周期
+    initLifecycle(vm) // 初始化组件的父子关系
     initEvents(vm)
     initRender(vm)
     callHook(vm, 'beforeCreate')

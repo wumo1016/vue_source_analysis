@@ -37,8 +37,8 @@ export function initGlobalAPI (Vue: GlobalAPI) {
   Vue.util = {
     warn,
     extend,
-    mergeOptions,
-    defineReactive
+    mergeOptions, // 合并属性
+    defineReactive // 定义响应式数据
   }
 
   Vue.set = set
@@ -60,10 +60,11 @@ export function initGlobalAPI (Vue: GlobalAPI) {
   // components with in Weex's multi-instance scenarios.
   Vue.options._base = Vue
 
+  // 将builtInComponents对象里的组件加入到Vue.options.components
   extend(Vue.options.components, builtInComponents)
 
-  initUse(Vue)
-  initMixin(Vue)
+  initUse(Vue) // Vue.use
+  initMixin(Vue) // Vue.mixin
   initExtend(Vue)
   initAssetRegisters(Vue)
 }
