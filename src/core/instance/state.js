@@ -253,7 +253,7 @@ function createComputedGetter (key) {
       // 初始化的时候 cher.dirty = true
       // 在修改data中属性时候，会走到自己subs的computed watcher，然后在update的时候 watcher.dirty = true
       if (watcher.dirty) {
-        watcher.evaluate() // cher.dirty = false
+        watcher.evaluate() // watcher.dirty = false
       }
       if (Dep.target) {
         // 将自己的computed watcher添加到每个用到的属性的subs中

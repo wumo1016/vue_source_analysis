@@ -91,7 +91,8 @@ export function mergeDataOrFn(
   vm ?: Component
 ): ? Function {
   
-  // vm是当前vue实例，子组件(vm为undefined)走的是if,new Vue中走的是else
+  // vm是当前Vue实例，子组件(vm为undefined)走的是if,new Vue中走的是else
+  // vm只有根实例一个
   if (!vm) {
     // in a Vue.extend merge, both should be functions
     if (!childVal) {

@@ -213,33 +213,33 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
   ) {  
     warn(`Cannot set reactive property on undefined, null, or primitive value: ${(target: any)}`)
   }
-  if (Array.isArray(target) && isValidArrayIndex(key)) {
-    target.length = Math.max(target.length, key)
+  if (Array.isArray(target) && isValidArrayIndex(key)) { // 判断是否是数组
+    target.length = Math.max(target.length, key) // 取最大方法
     target.splice(key, 1, val)
     return val
   }
-  if (key in target && !(key in Object.prototype)) {
+  if (key in target && !(key in Object.prototype)) { // 看目标对象是否已存在这个属性
     target[key] = val
     return val
   }
   // 是否是响应式对象, 返回的是data中定义的响应式对象，value是一个Observe
   const ob = (target: any).__ob__
-  if (target._isVue || (ob && ob.vmCount)) {
+  if (target._isVue || (ob && ob.vmCount)) { // 不能给Vue实例(组件实例)和data的一级直接设置
     process.env.NODE_ENV !== 'production' && warn(
       'Avoid adding reactive properties to a Vue instance or its root $data ' +
       'at runtime - declare it upfront in the data option.'
     )
     return val
   }
-  if (!ob) {
+  if (!ob) { // 如果原本就不是响应式对象
     target[key] = val
     return val
   }
-  defineReactive(ob.value, key, val)
+  defineReactive(ob.value, key, val) // 设置成响应式
   ob.dep.notify()
   return val
 }
- 
+
 /**
  * Delete a property and trigger change if necessary.
  */
