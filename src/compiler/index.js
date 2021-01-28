@@ -14,9 +14,9 @@ export const createCompiler = createCompilerCreator(function baseCompile (
 ): CompiledResult {
   const ast = parse(template.trim(), options) // 将template生成ast语法树 parseHTML
   if (options.optimize !== false) {
-    optimize(ast, options) // 对静态语法做静态标记 
+    optimize(ast, options) // 对静态语法做静态标记 diff优化 是静态节点直接跳过
   }
-  const code = generate(ast, options) // 生成字符串代码 _c _v
+  const code = generate(ast, options) // 生成字符串代码 _c _v <span>123</span>
   return {
     ast,
     render: code.render,
