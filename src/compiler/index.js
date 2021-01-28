@@ -12,11 +12,11 @@ export const createCompiler = createCompilerCreator(function baseCompile (
   template: string,
   options: CompilerOptions
 ): CompiledResult {
-  const ast = parse(template.trim(), options)
+  const ast = parse(template.trim(), options) // 将template生成ast语法树 parseHTML
   if (options.optimize !== false) {
-    optimize(ast, options)
+    optimize(ast, options) // 对静态语法做静态标记 
   }
-  const code = generate(ast, options)
+  const code = generate(ast, options) // 生成字符串代码 _c _v
   return {
     ast,
     render: code.render,
