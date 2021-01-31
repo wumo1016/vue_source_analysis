@@ -1,18 +1,18 @@
 <template>
   <div>
-    <input type="text" v-model="test">
+    <input type="text" v-model="test" />
+    {{ test }}
   </div>
 </template>
 <script>
 export default {
   name: "App",
-  data(){
+  data() {
     return {
-      test: ''
-    }
+      test: "",
+    };
   },
-  methods: {
-  }
+  methods: {},
 };
 </script>
 

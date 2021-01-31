@@ -94,7 +94,7 @@ export function resolveAsyncComponent (
       // invoke callbacks only if this is not a synchronous resolve
       // (async resolves are shimmed as synchronous during SSR)
       if (!sync) {
-        forceRender(true)
+        forceRender(true) // 强制更新 $forceUpdate()
       } else {
         owners.length = 0
       }

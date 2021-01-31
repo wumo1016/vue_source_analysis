@@ -160,17 +160,17 @@ export function createComponent (
   // extract props
   const propsData = extractPropsFromVNodeData(data, Ctor, tag)
 
-  // functional component
+  // 函数式组件
   if (isTrue(Ctor.options.functional)) {
     return createFunctionalComponent(Ctor, propsData, data, context, children)
   }
 
   // extract listeners, since these needs to be treated as
   // child component listeners instead of DOM listeners
-  const listeners = data.on
+  const listeners = data.on // 处理事件
   // replace with listeners with .native modifier
   // so it gets processed during parent component patch.
-  data.on = data.nativeOn
+  data.on = data.nativeOn // 处理原生事件
 
   if (isTrue(Ctor.options.abstract)) {
     // abstract components do not keep anything
