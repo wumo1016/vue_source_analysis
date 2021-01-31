@@ -1077,8 +1077,6 @@ function getModuleByNamespace (store, helper, namespace) {
   return module
 }
 
-console.log(123456);
-
 var index = {
   Store: Store,
   install: install,

@@ -1,14 +1,14 @@
 <template>
   <div>
+    <input type="text" v-model="test">
   </div>
 </template>
 <script>
-// import Headers from '@/components/headers'
 export default {
-  // components: {Headers},
   name: "App",
   data(){
     return {
+      test: ''
     }
   },
   methods: {
