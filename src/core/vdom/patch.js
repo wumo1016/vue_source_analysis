@@ -73,6 +73,7 @@ export function createPatchFunction (backend) {
 
   const { modules, nodeOps } = backend
   
+  // vue内部节点钩子
   const hooks = ['create', 'activate', 'update', 'remove', 'destroy']
   // 将modules中的同类方法都整理到一起
   for (i = 0; i < hooks.length; ++i) {

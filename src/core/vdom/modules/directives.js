@@ -14,7 +14,7 @@ export default {
 
 function updateDirectives (oldVnode: VNodeWithData, vnode: VNodeWithData) {
   if (oldVnode.data.directives || vnode.data.directives) {
-    _update(oldVnode, vnode)
+    _update(oldVnode, vnode) // create 的时候刚刚创建元素 并未插入
   }
 }
 
@@ -31,7 +31,7 @@ function _update (oldVnode, vnode) {
   for (key in newDirs) {
     oldDir = oldDirs[key]
     dir = newDirs[key]
-    if (!oldDir) {
+    if (!oldDir) { // 没有老的指令
       // new directive, bind 调用指令的钩子
       callHook(dir, 'bind', vnode, oldVnode)
       if (dir.def && dir.def.inserted) {
@@ -49,7 +49,7 @@ function _update (oldVnode, vnode) {
   }
 
   if (dirsWithInsert.length) {
-    const callInsert = () => {
+    const callInsert = () => { // 等待插入页面后再调用
       for (let i = 0; i < dirsWithInsert.length; i++) {
         callHook(dirsWithInsert[i], 'inserted', vnode, oldVnode)
       }
