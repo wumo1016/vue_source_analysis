@@ -52,7 +52,7 @@ const patternTypes: Array<Function> = [String, RegExp, Array]
 
 export default {
   name: 'keep-alive',
-  abstract: true, // 抽象组件 在_init方法中initLifecycle中建立父子关系
+  abstract: true, // 抽象组件 在_init方法中 initLifecycle 中建立父子关系
 
   props: {
     include: patternTypes,
@@ -82,6 +82,7 @@ export default {
 
   render () {
     const slot = this.$slots.default
+    // 如果 keep-alive 包裹多个组件 只会缓存第一个
     const vnode: VNode = getFirstComponentChild(slot)
     const componentOptions: ?VNodeComponentOptions = vnode && vnode.componentOptions
     if (componentOptions) {
@@ -94,7 +95,7 @@ export default {
         // excluded
         (exclude && name && matches(exclude, name))
       ) {
-        return vnode
+        return vnode // 如果不需要返回 直接返回vnode
       }
 
       const { cache, keys } = this
@@ -103,7 +104,7 @@ export default {
         // so cid alone is not enough (#3269)
         ? componentOptions.Ctor.cid + (componentOptions.tag ? `::${componentOptions.tag}` : '')
         : vnode.key
-      if (cache[key]) {
+      if (cache[key]) { // 如果有缓存 将之前的直接返回
         vnode.componentInstance = cache[key].componentInstance
         // make current key freshest
         remove(keys, key)
@@ -112,7 +113,7 @@ export default {
         cache[key] = vnode
         keys.push(key)
         // prune oldest entry
-        // LRU原则 删除最近最少使用的key的vnode
+        // LRU原则 删除最少使用的key的vnode
         if (this.max && keys.length > parseInt(this.max)) {
           pruneCacheEntry(cache, keys[0], keys, this._vnode)
         }

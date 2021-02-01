@@ -61,6 +61,7 @@ export function initGlobalAPI (Vue: GlobalAPI) {
   Vue.options._base = Vue
 
   // 将builtInComponents对象里的组件加入到Vue.options.components
+  // keep-alive组件
   extend(Vue.options.components, builtInComponents)
 
   initUse(Vue) // Vue.use

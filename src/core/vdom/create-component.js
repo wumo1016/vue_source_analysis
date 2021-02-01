@@ -40,7 +40,7 @@ const componentVNodeHooks = {
       vnode.componentInstance &&
       !vnode.componentInstance._isDestroyed &&
       vnode.data.keepAlive
-    ) {
+    ) { // keep-alive 组件再次渲染走的逻辑
       // kept-alive components, treat as a patch
       const mountedNode: any = vnode // work around flow
       componentVNodeHooks.prepatch(mountedNode, mountedNode)
