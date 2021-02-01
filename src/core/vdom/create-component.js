@@ -259,7 +259,7 @@ function mergeHook (f1: any, f2: any): Function {
 function transformModel (options, data: any) {
   const prop = (options.model && options.model.prop) || 'value'
   const event = (options.model && options.model.event) || 'input';
-  // 会将传入的prop属性的值改为v-model传入变量的值
+  // 会将传入的prop属性的值改为v-model传入变量的值 
   (data.attrs || (data.attrs = {}))[prop] = data.model.value
   const on = data.on || (data.on = {}) // 添加一个input事件
   const existing = on[event]

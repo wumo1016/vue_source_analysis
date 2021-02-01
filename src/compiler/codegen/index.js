@@ -166,7 +166,7 @@ function genIfConditions (
   if (condition.exp) {
     return `(${condition.exp})?${
       genTernaryExp(condition.block)
-    }:${
+    }:${ // v-else-if
       genIfConditions(conditions, state, altGen, altEmpty)
     }`
   } else {
@@ -209,7 +209,7 @@ export function genFor (
     )
   }
 
-  el.forProcessed = true // avoid recursion
+  el.forProcessed = true // avoid recursion 避免死循环
   return `${altHelper || '_l'}((${exp}),` +
     `function(${alias}${iterator1}${iterator2}){` +
       `return ${(altGen || genElement)(el, state)}` +

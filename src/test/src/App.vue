@@ -1,7 +1,8 @@
 <template>
   <div>
-    <input type="text" v-model="test" />
-    {{ test }}
+    <div v-for="i in 5" :key="i">
+      {{ i }}
+    </div>
   </div>
 </template>
 <script>
