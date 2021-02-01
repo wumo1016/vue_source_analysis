@@ -52,6 +52,12 @@ const debug = process.env.NODE_ENV !== 'production'
 //   plugins: debug ? [createLogger()] : []
 // })
 
+// const templateCompiler = require('vue-template-compiler')
+// const test = templateCompiler.compile(`
+//   <div v-model="test">测试</div>
+// `)
+// console.log(test.render)
+
 new Vue({
   el: '#app',
   // store,

@@ -111,16 +111,16 @@ export function addHandler (
   // check capture modifier
   if (modifiers.capture) {
     delete modifiers.capture
-    name = prependModifierMarker('!', name, dynamic)
+    name = prependModifierMarker('!', name, dynamic) // @click.capture="xx" => @click.capture="!xx"
   }
   if (modifiers.once) {
     delete modifiers.once
-    name = prependModifierMarker('~', name, dynamic)
+    name = prependModifierMarker('~', name, dynamic) // @click.once="xx" => @click.once="~xx"
   }
   /* istanbul ignore if */
   if (modifiers.passive) {
     delete modifiers.passive
-    name = prependModifierMarker('&', name, dynamic)
+    name = prependModifierMarker('&', name, dynamic) // @click.passive="xx" => @click.passive="&xx"
   }
 
   let events
